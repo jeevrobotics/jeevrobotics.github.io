@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fal Robotics — The simulation layer for agricultural robotics</title>
-  <meta name="description" content="Fal Robotics builds realistic, field-accurate simulation for agricultural robots — capturing how the same crop varies from farm to farm and state to state — so policies trained in simulation deploy zero-shot in the field." />
+  <title>Fal Robotics: The simulation layer for agricultural robotics</title>
+  <meta name="description" content="Fal Robotics builds realistic, field-accurate simulation for agricultural robots, capturing how the same crop varies from farm to farm and state to state, so policies trained in simulation deploy zero-shot in the field." />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -17,7 +17,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      /* Mercury Frost — white-first, agricultural-tech */
+      /* Mercury Frost: white-first, agricultural-tech */
       --white: #ffffff;
       --surface: #f7f7f9;
       --surface-elevated: #ffffff;
@@ -83,6 +83,8 @@
       border: 1px solid var(--border-strong);
       border-radius: var(--radius-pill);
       background: var(--white);
+      font-family: inherit;
+      cursor: pointer;
       transition: background 0.3s, border-color 0.3s, color 0.3s;
     }
     .nav-pill:hover { background: var(--surface); border-color: var(--border-strong); }
@@ -95,7 +97,7 @@
     .hero {
       min-height: 100vh; min-height: 100dvh;
       background: var(--white);
-      padding: clamp(88px, 14vh, 120px) clamp(20px, 4vw, 48px) 48px;
+      padding: clamp(88px, 14vh, 120px) 0 48px;
       display: flex; flex-direction: column;
       align-items: center;
     }
@@ -104,6 +106,7 @@
       text-align: center;
       margin-bottom: clamp(24px, 4vh, 40px);
       max-width: 900px;
+      padding: 0 clamp(20px, 4vw, 48px);
     }
 
     .hero-brand {
@@ -133,16 +136,18 @@
       letter-spacing: -0.03em;
       margin-bottom: clamp(28px, 4vh, 48px);
       color: var(--ink);
+      padding: 0 clamp(20px, 4vw, 48px);
     }
     .hl-line { display: block; }
     .hl-soft { font-weight: 600; color: var(--accent); }
 
     .hero-video-wrap {
       position: relative;
-      width: 100vw;
-      max-width: 100vw;
-      margin-left: calc(50% - 50vw);
-      aspect-ratio: 16 / 7;
+      width: 100%;
+      max-width: none;
+      align-self: stretch;
+      flex-shrink: 0;
+      aspect-ratio: 16 / 9;
       border-radius: 0;
       overflow: hidden;
       background: var(--accent-tint);
@@ -152,14 +157,16 @@
       border-bottom: 1px solid var(--border);
       will-change: transform;
       transform: translateZ(0);
+      transform-origin: center center;
     }
 
     .hero-video {
       width: 100%; height: 100%;
       object-fit: cover;
-      object-position: center 42%;
+      object-position: center center;
       display: block;
       transform: scale(1.04);
+      transform-origin: center center;
       will-change: transform;
     }
 
@@ -571,17 +578,37 @@
     }
     .gallery-card {
       flex: 0 0 min(340px, 82vw);
-      padding: 36px 32px;
+      padding: 0;
+      overflow: hidden;
       background: var(--white);
       border: 1px solid var(--border);
       border-radius: 20px;
       box-shadow: var(--shadow-sm);
       transition: border-color 0.4s, box-shadow 0.4s, transform 0.4s;
+      cursor: pointer;
+      text-align: left;
+      font: inherit;
+      color: inherit;
+      display: block;
+    }
+    .gallery-card:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
     }
     .gallery-card.is-center {
       border-color: rgba(74, 90, 232, 0.35);
       box-shadow: 0 16px 48px rgba(74, 90, 232, 0.12);
     }
+    .gallery-card-media {
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      background: var(--surface);
+    }
+    .gallery-card-media img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+    .gallery-card-body { padding: 28px 28px 32px; }
     .gallery-card-crop {
       font-size: 11px; font-weight: 600;
       letter-spacing: 0.14em; text-transform: uppercase;
@@ -596,9 +623,170 @@
     .gallery-card p {
       font-size: 0.92rem; color: var(--muted); line-height: 1.55;
     }
+    .gallery-card-hint {
+      margin-top: 14px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
     .gallery-spacer { height: 60vh; }
 
-    /* ── CTA — single dark band for contrast ── */
+    .crop-modal {
+      position: fixed; inset: 0; z-index: 2000;
+      display: none; align-items: center; justify-content: center;
+      padding: 24px;
+      background: rgba(17, 17, 21, 0.55);
+      backdrop-filter: blur(8px);
+    }
+    .crop-modal.is-open { display: flex; }
+    .crop-modal-panel {
+      width: min(1080px, 100%);
+      max-height: min(90vh, 900px);
+      overflow: auto;
+      background: var(--white);
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-lg);
+      padding: clamp(20px, 4vw, 36px);
+    }
+    .crop-modal-top {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 16px; margin-bottom: 24px;
+    }
+    .crop-modal-kicker {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 8px;
+    }
+    .crop-modal-top h3 {
+      font-size: clamp(1.35rem, 3vw, 1.85rem);
+      font-weight: 500; letter-spacing: -0.02em;
+    }
+    .crop-modal-top p {
+      margin-top: 8px; color: var(--muted); max-width: 52ch; line-height: 1.55;
+    }
+    .crop-modal-close {
+      flex: 0 0 auto;
+      width: 40px; height: 40px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--ink);
+      font-size: 1.25rem;
+      cursor: pointer;
+    }
+    .crop-compare {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .crop-compare figure {
+      margin: 0;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--surface);
+    }
+    .crop-compare img {
+      width: 100%; aspect-ratio: 4 / 3;
+      object-fit: cover; display: block;
+    }
+    .crop-compare figcaption {
+      padding: 12px 14px 14px;
+    }
+    .crop-compare strong {
+      display: block;
+      font-size: 0.92rem; font-weight: 600;
+      margin-bottom: 4px; color: var(--ink);
+    }
+    .crop-compare span {
+      font-size: 0.82rem; color: var(--muted); line-height: 1.45;
+    }
+
+    .contact-modal-panel {
+      width: min(520px, 100%);
+      max-height: min(90vh, 900px);
+      overflow: auto;
+      background: var(--white);
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-lg);
+      padding: clamp(22px, 4vw, 36px);
+    }
+    .contact-form {
+      display: grid;
+      gap: 14px;
+      margin-top: 8px;
+    }
+    .contact-field {
+      display: grid;
+      gap: 6px;
+    }
+    .contact-field label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .contact-field input,
+    .contact-field textarea {
+      width: 100%;
+      border: 1px solid var(--border-strong);
+      border-radius: 12px;
+      background: var(--surface);
+      color: var(--ink);
+      font: inherit;
+      font-size: 0.95rem;
+      padding: 12px 14px;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .contact-field input:focus,
+    .contact-field textarea:focus {
+      border-color: var(--accent);
+      background: var(--white);
+    }
+    .contact-field textarea {
+      min-height: 120px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+    .contact-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 4px;
+    }
+    .contact-submit {
+      appearance: none;
+      border: none;
+      cursor: pointer;
+      padding: 12px 22px;
+      border-radius: var(--radius-pill);
+      background: var(--accent);
+      color: var(--white);
+      font: inherit;
+      font-size: 0.92rem;
+      font-weight: 500;
+      transition: background 0.25s;
+    }
+    .contact-submit:hover { background: var(--accent-hover); }
+    .contact-submit:disabled {
+      opacity: 0.65;
+      cursor: wait;
+    }
+    .contact-status {
+      font-size: 0.85rem;
+      color: var(--muted);
+      min-height: 1.2em;
+    }
+    .contact-status.is-ok { color: #1f7a4d; }
+    .contact-status.is-err { color: #a33b3b; }
+
+    /* CTA: single dark band for contrast */
     .section-cta {
       background: var(--dark-band);
       color: var(--white);
@@ -649,9 +837,12 @@
 </head>
 <body>
 
-  <!-- Replace PLACEHOLDER with your forms.gle link after creating the Google Form -->
+  <!-- Replace PLACEHOLDERs after creating the Google Form / Formspree inbox -->
   <script id="fal-config">
     window.FAL_ACCESS_FORM = "https://forms.gle/PLACEHOLDER_SUBMIT_AFTER_CREATING_FORM";
+    window.FAL_CONTACT_EMAIL = "hello@falrobotics.com";
+    /* Optional: Formspree endpoint for true in-browser send. Example: https://formspree.io/f/xxxx */
+    window.FAL_CONTACT_ENDPOINT = "";
   </script>
 
   <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
@@ -660,6 +851,7 @@
     <a href="#" class="nav-logo">Fal Robotics</a>
     <div class="nav-links">
       <a href="#platforms" class="nav-pill">Platform</a>
+      <button type="button" class="nav-pill" id="contactOpen">Contact</button>
       <a href="#" class="nav-pill nav-pill--accent access-form-link">Request Access</a>
     </div>
   </nav>
@@ -687,14 +879,14 @@
         loop
         preload="auto"
       >
-        <source src="assets/teaser_descent.mp4" type="video/mp4" />
+        <source src="assets/orchard_detect.mp4" type="video/mp4" />
       </video>
       <div class="hero-video-fade" id="heroVideoFade"></div>
       <div class="hero-video-vignette"></div>
     </div>
 
     <p class="hero-tag" id="heroTag">
-      Simulation realistic and varied enough that a robot trained in it works on a farm it has never seen — no fine-tuning in the field.
+      Simulation realistic and varied enough that a robot trained in it works on a farm it has never seen. No fine-tuning in the field.
     </p>
   </header>
 
@@ -710,55 +902,54 @@
             </div>
             <div class="compare-col">
               <span class="compare-region">California</span>
-              <span class="compare-place">Central Valley</span>
+              <span class="compare-place">Lodi / Central Valley</span>
             </div>
           </div>
           <div class="compare-media">
             <figure>
-              <img src="assets/variant_wa.jpg" alt="Washington tall-spindle apple rows near Parker / Yakima Valley — narrow fruiting walls with a clear drive alley between rows" loading="lazy">
-              <figcaption class="compare-cap">WA · ~3 ft wall</figcaption>
+              <img src="assets/variant_wa.jpg" alt="Washington tall-spindle apple rows near Parker / Yakima Valley: narrow fruiting walls with a clear drive alley between rows" loading="lazy">
+              <figcaption class="compare-cap">WA · Vertical wall</figcaption>
             </figure>
             <figure>
-              <img src="assets/variant_ca.jpg" alt="California free-standing apple orchard with wide tree spacing and open ground between trunks" loading="lazy">
-              <figcaption class="compare-cap">CA · Wide spacing</figcaption>
+              <img src="assets/variant_ca.jpg" alt="Lodi Central Valley V-trellis apple orchard with angled leaders, wire support, and reflective ground cover" loading="lazy">
+              <figcaption class="compare-cap">CA · V-trellis</figcaption>
             </figure>
           </div>
           <p class="compare-credit">
             Photos:
             <a href="https://commons.wikimedia.org/wiki/File:Orchards_8017.jpg" target="_blank" rel="noopener">Parker / Yakima Valley orchard</a> (Chris Light, CC BY-SA 4.0);
-            <a href="https://commons.wikimedia.org/wiki/File:Apple_orchard_-_May_2023_-_Sarah_Stierch_01.jpg" target="_blank" rel="noopener">Sebastopol apple orchard</a> (Sarah Stierch, CC BY 4.0).
-            CA panel is Sonoma County — closest open-license free-standing canopy match; true Central Valley apple stills are scarce.
+            Lodi / Central Valley V-trellis orchard (farm photo).
           </p>
           <dl class="compare-rows">
             <div class="compare-row">
               <dt>Training system</dt>
-              <dd>Tall-spindle / V-trellis fruiting wall</dd>
-              <dd>Central leader or open vase, free-standing</dd>
+              <dd>Tall-spindle / vertical fruiting wall</dd>
+              <dd>V-trellis (angled multi-leader)</dd>
             </div>
             <div class="compare-row">
               <dt>Rootstock &amp; spacing</dt>
-              <dd>Dwarfing (M.9, G.41); ~3 ft × 11 ft</dd>
-              <dd>Semi-dwarf to standard; ~12–18 ft</dd>
+              <dd>Dwarfing (M.9, G.41); ~3 ft × 10-11 ft</dd>
+              <dd>Semi-dwarf (e.g. M.7); ~8 ft × 14 ft typical</dd>
             </div>
             <div class="compare-row">
               <dt>Canopy</dt>
-              <dd>Narrow 2-D wall, 10–12 ft tall</dd>
-              <dd>Dense 3-D canopy, 14–18 ft</dd>
+              <dd>Narrow 2-D wall, ~10-12 ft tall</dd>
+              <dd>Two angled faces, ~11 ft tall, 8-10 leaders</dd>
             </div>
             <div class="compare-row">
               <dt>Light</dt>
               <dd>46° N, cool nights, long days</dd>
-              <dd>37° N, intense sun, sunburn pressure, shade netting</dd>
+              <dd>~38° N, hot days and nights, sunburn risk, overhead cooling</dd>
             </div>
             <div class="compare-row">
               <dt>Harvest window</dt>
-              <dd>Late Aug – Oct (Gala, Honeycrisp, Cosmic Crisp)</dd>
-              <dd>Jul – Sep (Gravenstein, Gala, Granny Smith, Fuji)</dd>
+              <dd>Aug-Oct (Gala, Honeycrisp, Cosmic Crisp)</dd>
+              <dd>Aug-Oct (Gala, Fuji, Granny Smith, Pink Lady)</dd>
             </div>
             <div class="compare-row">
               <dt>What the robot faces</dt>
               <dd>Short reach, one approach side, fruit in a plane</dd>
-              <dd>Long reach, approach from any side, deep occlusion, glare</dd>
+              <dd>Angled approach on both V faces, interior fruit, glare and heat stress</dd>
             </div>
           </dl>
         </div>
@@ -767,7 +958,7 @@
         <span class="tag-pill">Overview</span>
         <h2>Agriculture is not one world. It is <strong>millions</strong> of them.</h2>
         <p>
-          Same crop, two states. In Washington an apple orchard is a fruiting wall — dwarf trees on a tall-spindle trellis, planted three feet apart, fruit hanging in a flat plane a robot can approach from one side. In California the same cultivar is often a free-standing central-leader tree on wider spacing, with fruit buried in a three-dimensional canopy under harder, hotter light and shade netting. Different reach, different approach angles, different occlusion, different glare. A policy trained on one breaks on the other — and that is one crop, two states. We build simulation that captures this variation faithfully, so a robot trained in it has, in effect, already seen your field.
+          Same crop, two states. In Washington an apple orchard is a vertical fruiting wall: dwarf trees on a tall-spindle trellis, planted about three feet apart, fruit hanging in a flat plane a robot can approach from one side. In California's Central Valley around Lodi the same crop is often trained to a V-trellis: multi-leader trees angled on wires, wider between-row spacing, fruit on both faces of the V under harder heat and sunburn pressure, with reflective mulch and overhead cooling. Different approach angles, different occlusion, different glare. A policy trained on one breaks on the other, and that is one crop, two states. We build simulation that captures this variation faithfully, so a robot trained in it has, in effect, already seen your field.
         </p>
       </div>
     </div>
@@ -797,7 +988,7 @@
     <div class="platforms-intro reveal-block">
       <span class="tag-pill">Platform</span>
       <h2>Simulation infrastructure built for agriculture.</h2>
-      <p>General-purpose simulators treat a field as a scene. We treat it as a living system with regional, seasonal and cultivar-level variation — and give you the tools to train and evaluate against all of it. The plant below is corn, not apple: the same stack models deformable physics across crops, so the point is variability — we can do this for any crop you run.</p>
+      <p>General-purpose simulators treat a field as a scene. We treat it as a living system with regional, seasonal and cultivar-level variation, and give you the tools to train and evaluate against all of it. The plant below is corn, not apple: the same stack models deformable physics across crops, so the point is variability: we can do this for any crop you run.</p>
     </div>
 
     <div class="platform-list">
@@ -813,7 +1004,7 @@
         </div>
         <div class="platform-copy">
           <h3>Physics of Living Plants</h3>
-          <p>Deformable stems, branch compliance, fruit detachment forces, occlusion and contact modeled to match what a gripper feels in the field. Interaction realism is the part of the sim-to-real gap that matters most for manipulation — so it is where we spend our effort.</p>
+          <p>Deformable stems, branch compliance, fruit detachment forces, occlusion and contact modeled to match what a gripper feels in the field. Interaction realism is the part of the sim-to-real gap that matters most for manipulation, so it is where we spend our effort.</p>
         </div>
       </article>
 
@@ -826,7 +1017,7 @@
         </div>
         <div class="platform-copy">
           <h3>Evaluate, Then Train</h3>
-          <p>Stress-test an existing policy across thousands of field variants to find where it breaks, then close those gaps with targeted domain randomization and RL. Built on Helios plant models and Isaac Sim — one command, any scale.</p>
+          <p>Stress-test an existing policy across thousands of field variants to find where it breaks, then close those gaps with targeted domain randomization and RL. Built on Helios plant models and Isaac Sim. One command, any scale.</p>
           <p class="platform-caption">GRASP (2026): a policy trained on deformable plant physics in simulation, deployed zero-shot on a real arm.</p>
         </div>
       </article>
@@ -855,7 +1046,7 @@
     <div class="stats-grid">
       <div class="stat-item reveal-block">
         <div class="stat-value"><span class="stat-number" data-target="0">0</span></div>
-        <p class="stat-label">Field fine-tuning steps before deployment — the target is zero-shot</p>
+        <p class="stat-label">Field fine-tuning steps before deployment. The target is zero-shot</p>
       </div>
       <div class="stat-item reveal-block">
         <div class="stat-value"><span class="stat-number" data-target="10000" data-compact="1">0</span>+</div>
@@ -873,17 +1064,97 @@
     <div class="gallery-header reveal-block">
       <span class="tag-pill">Variation</span>
       <h2>Same crop. Different world.</h2>
-      <p>Every card is one crop. Each is also dozens of fields that look nothing alike — and all of them are in the simulation.</p>
+      <p>Every card is one crop. Click a card to compare the field systems side by side. All of them live in the simulation.</p>
     </div>
     <div class="gallery-track" id="galleryTrack">
-      <article class="gallery-card"><p class="gallery-card-crop">Strawberries</p><h3>Beds, Tunnels, Tabletops</h3><p>Raised beds in Watsonville, plasticulture in Florida, tabletop troughs in a Dutch greenhouse — one berry, three canopies.</p></article>
-      <article class="gallery-card"><p class="gallery-card-crop">Apples</p><h3>Wall vs. Tree</h3><p>A tall-spindle trellis in Washington and a central-leader orchard in Michigan hide the same fruit very differently.</p></article>
-      <article class="gallery-card"><p class="gallery-card-crop">Grapes</p><h3>Trellis Systems</h3><p>VSP, quadrilateral cordon, pergola — cluster position and stem access change with every training system and vintage.</p></article>
-      <article class="gallery-card"><p class="gallery-card-crop">Peppers</p><h3>Open Field vs. Glasshouse</h3><p>Staked field rows in Georgia and high-wire greenhouse vines in Ontario demand different reaches and detachment forces.</p></article>
-      <article class="gallery-card"><p class="gallery-card-crop">Your Crop, Your Region</p><h3>Added to the Distribution</h3><p>Tell us where you grow. We model your fields and fold them into the training set — before a robot ever arrives.</p></article>
+      <button type="button" class="gallery-card" data-crop="strawberries">
+        <div class="gallery-card-media"><img src="assets/gallery/straw_plastic.jpg" alt="Strawberry plasticulture beds" loading="lazy"></div>
+        <div class="gallery-card-body">
+          <p class="gallery-card-crop">Strawberries</p>
+          <h3>Beds, Tunnels, Tabletops</h3>
+          <p>Raised plasticulture beds, high tunnels, and greenhouse troughs: one berry, three canopies.</p>
+          <p class="gallery-card-hint">Click to compare</p>
+        </div>
+      </button>
+      <button type="button" class="gallery-card" data-crop="grapes">
+        <div class="gallery-card-media"><img src="assets/gallery/grape_rows.jpg" alt="Vertical vineyard rows" loading="lazy"></div>
+        <div class="gallery-card-body">
+          <p class="gallery-card-crop">Grapes</p>
+          <h3>Trellis Systems</h3>
+          <p>Vertical rows, old-vine cordon, and pergola: cluster position and stem access change with every training system.</p>
+          <p class="gallery-card-hint">Click to compare</p>
+        </div>
+      </button>
+      <button type="button" class="gallery-card" data-crop="peppers">
+        <div class="gallery-card-media"><img src="assets/gallery/pepper_gh.jpg" alt="Greenhouse pepper plants" loading="lazy"></div>
+        <div class="gallery-card-body">
+          <p class="gallery-card-crop">Peppers</p>
+          <h3>Open Field vs. Glasshouse</h3>
+          <p>Open field rows and protected greenhouse culture demand different reaches and detachment forces.</p>
+          <p class="gallery-card-hint">Click to compare</p>
+        </div>
+      </button>
+      <button type="button" class="gallery-card" data-crop="custom">
+        <div class="gallery-card-media"><img src="assets/gallery/custom_field.jpg" alt="Agricultural fields from above" loading="lazy"></div>
+        <div class="gallery-card-body">
+          <p class="gallery-card-crop">Your Crop, Your Region</p>
+          <h3>Added to the Distribution</h3>
+          <p>Tell us where you grow. We model your fields and fold them into the training set before a robot ever arrives.</p>
+          <p class="gallery-card-hint">Click to compare</p>
+        </div>
+      </button>
     </div>
     <div class="gallery-spacer" id="gallerySpacer"></div>
   </section>
+
+  <div class="crop-modal" id="cropModal" aria-hidden="true">
+    <div class="crop-modal-panel" role="dialog" aria-modal="true" aria-labelledby="cropModalTitle">
+      <div class="crop-modal-top">
+        <div>
+          <p class="crop-modal-kicker" id="cropModalKicker"></p>
+          <h3 id="cropModalTitle"></h3>
+          <p id="cropModalCopy"></p>
+        </div>
+        <button type="button" class="crop-modal-close" id="cropModalClose" aria-label="Close comparison">×</button>
+      </div>
+      <div class="crop-compare" id="cropCompare"></div>
+    </div>
+  </div>
+
+  <div class="crop-modal" id="contactModal" aria-hidden="true">
+    <div class="contact-modal-panel" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
+      <div class="crop-modal-top">
+        <div>
+          <p class="crop-modal-kicker">Contact</p>
+          <h3 id="contactModalTitle">Get in touch</h3>
+          <p>Tell us who you are and what you are working on. We will get back to you.</p>
+        </div>
+        <button type="button" class="crop-modal-close" id="contactClose" aria-label="Close contact form">×</button>
+      </div>
+      <form class="contact-form" id="contactForm" novalidate>
+        <div class="contact-field">
+          <label for="contactName">Name</label>
+          <input id="contactName" name="name" type="text" autocomplete="name" required />
+        </div>
+        <div class="contact-field">
+          <label for="contactEmail">Email</label>
+          <input id="contactEmail" name="email" type="email" autocomplete="email" required />
+        </div>
+        <div class="contact-field">
+          <label for="contactOrg">Company / farm <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+          <input id="contactOrg" name="organization" type="text" autocomplete="organization" />
+        </div>
+        <div class="contact-field">
+          <label for="contactMessage">Message</label>
+          <textarea id="contactMessage" name="message" required placeholder="What crop, region, or robot stack are you exploring?"></textarea>
+        </div>
+        <div class="contact-actions">
+          <button type="submit" class="contact-submit" id="contactSubmit">Send message</button>
+          <p class="contact-status" id="contactStatus" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- CTA -->
   <section class="section-cta" id="cta">
@@ -941,7 +1212,7 @@
 
         if (reduced) return;
 
-        /* Gentle ambient zoom — always smooth, GPU transform */
+        /* Gentle ambient zoom: always smooth, GPU transform */
         gsap.to(video, {
           scale: 1.09,
           duration: 14,
@@ -985,7 +1256,7 @@
           delay: 0.7,
         });
 
-        /* Scroll parallax — scrub lag for buttery motion */
+        /* Scroll parallax: scrub lag for buttery motion */
         const heroTl = gsap.timeline({
           scrollTrigger: {
             trigger: "#hero",
@@ -995,8 +1266,8 @@
           },
         });
 
-        heroTl.to(wrap, { y: 100, scale: 0.94, ease: "none" }, 0);
-        heroTl.to(video, { scale: 1.12, ease: "none" }, 0);
+        heroTl.to(wrap, { y: 100, scale: 0.94, transformOrigin: "50% 50%", ease: "none" }, 0);
+        heroTl.to(video, { scale: 1.12, transformOrigin: "50% 50%", ease: "none" }, 0);
         heroTl.to(fade, { opacity: 0.85, ease: "none" }, 0);
         heroTl.to(intro, { y: -40, opacity: 0, ease: "power2.in" }, 0);
         heroTl.to(headline, { y: -50, opacity: 0, ease: "power2.in" }, 0);
@@ -1140,6 +1411,96 @@
         return String(n);
       }
 
+      /* ── Crop comparison modal ── */
+      function initCropModal() {
+        const modal = document.getElementById("cropModal");
+        const compare = document.getElementById("cropCompare");
+        const kicker = document.getElementById("cropModalKicker");
+        const title = document.getElementById("cropModalTitle");
+        const copy = document.getElementById("cropModalCopy");
+        const closeBtn = document.getElementById("cropModalClose");
+        if (!modal || !compare) return;
+
+        const crops = {
+          strawberries: {
+            kicker: "Strawberries",
+            title: "Beds, tunnels, tabletops",
+            copy: "Same berry, three production systems. Canopy height, fruit position, and reach change with every system.",
+            variants: [
+              { img: "assets/gallery/straw_plastic.jpg", label: "Plasticulture beds", note: "Raised beds with plastic mulch: low canopy, dense fruiting zone." },
+              { img: "assets/gallery/straw_ht.jpg", label: "High tunnel", note: "Protected rows under film: different light, humidity, and aisle geometry." },
+              { img: "assets/gallery/straw_table.jpg", label: "Greenhouse / tabletop", note: "Elevated troughs: robot reaches up into a narrow, repeating canopy." },
+            ],
+          },
+          grapes: {
+            kicker: "Grapes",
+            title: "Trellis systems",
+            copy: "Cluster height and stem access shift with the training system and vintage.",
+            variants: [
+              { img: "assets/gallery/grape_rows.jpg", label: "Vertical rows", note: "Upright canopy wall: clusters along a narrow vertical plane." },
+              { img: "assets/gallery/grape_cordon.jpg", label: "Old-vine cordon / head", note: "Thick trunks and irregular arms: deeper occlusion, variable detachment." },
+              { img: "assets/gallery/grape_pergola.jpg", label: "Pergola", note: "Overhead canopy: clusters hang below, reach and occlusion invert." },
+            ],
+          },
+          peppers: {
+            kicker: "Peppers",
+            title: "Open field vs. glasshouse",
+            copy: "Field staking and protected culture change plant height, support, and the forces a gripper feels.",
+            variants: [
+              { img: "assets/gallery/veg_field.jpg", label: "Open field", note: "Outdoor rows: wind, uneven ground, and broader plant spacing." },
+              { img: "assets/gallery/pepper_gh.jpg", label: "Greenhouse culture", note: "Protected blocks: denser planting, controlled light, different reach envelope." },
+              { img: "assets/gallery/pepper_red.jpg", label: "Fruit close-up", note: "Detachment and bruise risk vary with cultivar and maturity." },
+            ],
+          },
+          custom: {
+            kicker: "Your crop, your region",
+            title: "Added to the distribution",
+            copy: "We fold your fields into the training set before a robot arrives. Same stack, new samples from your region.",
+            variants: [
+              { img: "assets/gallery/custom_field.jpg", label: "Your region", note: "Tell us crop, training system, and geography." },
+              { img: "assets/gallery/field_rows.jpg", label: "Your spacing", note: "Row width, canopy height, and season become simulation parameters." },
+              { img: "assets/gallery/greenhouse.jpg", label: "Your structure", note: "Open field, tunnel, or glasshouse: each is another world to cover." },
+            ],
+          },
+        };
+
+        const open = (key) => {
+          const data = crops[key];
+          if (!data) return;
+          kicker.textContent = data.kicker;
+          title.textContent = data.title;
+          copy.textContent = data.copy;
+          compare.innerHTML = data.variants.map((v) => `
+            <figure>
+              <img src="${v.img}" alt="${v.label}" loading="lazy">
+              <figcaption>
+                <strong>${v.label}</strong>
+                <span>${v.note}</span>
+              </figcaption>
+            </figure>
+          `).join("");
+          modal.classList.add("is-open");
+          modal.setAttribute("aria-hidden", "false");
+          document.body.style.overflow = "hidden";
+          closeBtn.focus();
+        };
+
+        const close = () => {
+          modal.classList.remove("is-open");
+          modal.setAttribute("aria-hidden", "true");
+          document.body.style.overflow = "";
+        };
+
+        document.querySelectorAll(".gallery-card[data-crop]").forEach((card) => {
+          card.addEventListener("click", () => open(card.dataset.crop));
+        });
+        closeBtn.addEventListener("click", close);
+        modal.addEventListener("click", (e) => { if (e.target === modal) close(); });
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && modal.classList.contains("is-open")) close();
+        });
+      }
+
       /* ── Horizontal gallery ── */
       function initGallery() {
         const section = document.getElementById("gallery");
@@ -1182,12 +1543,114 @@
         });
       }
 
+      /* ── Contact modal ── */
+      function initContactModal() {
+        const modal = document.getElementById("contactModal");
+        const openBtn = document.getElementById("contactOpen");
+        const closeBtn = document.getElementById("contactClose");
+        const form = document.getElementById("contactForm");
+        const status = document.getElementById("contactStatus");
+        const submitBtn = document.getElementById("contactSubmit");
+        if (!modal || !openBtn || !form) return;
+
+        const setStatus = (msg, kind) => {
+          status.textContent = msg || "";
+          status.classList.remove("is-ok", "is-err");
+          if (kind) status.classList.add(kind);
+        };
+
+        const open = () => {
+          modal.classList.add("is-open");
+          modal.setAttribute("aria-hidden", "false");
+          document.body.style.overflow = "hidden";
+          setStatus("");
+          const name = document.getElementById("contactName");
+          if (name) name.focus();
+        };
+
+        const close = () => {
+          modal.classList.remove("is-open");
+          modal.setAttribute("aria-hidden", "true");
+          document.body.style.overflow = "";
+        };
+
+        const sendViaEndpoint = async (payload) => {
+          const endpoint = window.FAL_CONTACT_ENDPOINT;
+          if (!endpoint) return false;
+          const res = await fetch(endpoint, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body: JSON.stringify(payload),
+          });
+          if (!res.ok) throw new Error("Send failed");
+          return true;
+        };
+
+        const sendViaMailto = (payload) => {
+          const to = window.FAL_CONTACT_EMAIL || "hello@falrobotics.com";
+          const subject = encodeURIComponent("Fal Robotics contact from " + payload.name);
+          const body = encodeURIComponent(
+            "Name: " + payload.name + "\n" +
+            "Email: " + payload.email + "\n" +
+            "Company / farm: " + (payload.organization || "(not provided)") + "\n\n" +
+            payload.message
+          );
+          window.location.href = "mailto:" + to + "?subject=" + subject + "&body=" + body;
+          return true;
+        };
+
+        openBtn.addEventListener("click", open);
+        closeBtn.addEventListener("click", close);
+        modal.addEventListener("click", (e) => { if (e.target === modal) close(); });
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && modal.classList.contains("is-open")) close();
+        });
+
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const name = form.name.value.trim();
+          const email = form.email.value.trim();
+          const organization = form.organization.value.trim();
+          const message = form.message.value.trim();
+          if (!name || !email || !message) {
+            setStatus("Please fill in name, email, and message.", "is-err");
+            return;
+          }
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            setStatus("Enter a valid email address.", "is-err");
+            return;
+          }
+
+          const payload = { name, email, organization, message, _replyto: email };
+          submitBtn.disabled = true;
+          setStatus("Sending…");
+
+          try {
+            const usedEndpoint = await sendViaEndpoint(payload);
+            if (!usedEndpoint) sendViaMailto(payload);
+            setStatus(usedEndpoint ? "Sent. We will get back to you soon." : "Opening your email client…", "is-ok");
+            if (usedEndpoint) form.reset();
+          } catch (err) {
+            try {
+              sendViaMailto(payload);
+              setStatus("Opening your email client…", "is-ok");
+            } catch (err2) {
+              setStatus("Could not send. Email us at " + (window.FAL_CONTACT_EMAIL || "hello@falrobotics.com") + ".", "is-err");
+            }
+          } finally {
+            submitBtn.disabled = false;
+          }
+        });
+      }
+
       function init() {
         initHero();
         initThesis();
         initReveals();
         initPlatformViz();
         initStats();
+        initCropModal();
+        initContactModal();
         initGallery();
         window.addEventListener("load", () => ScrollTrigger.refresh());
         window.addEventListener("resize", () => ScrollTrigger.refresh());
