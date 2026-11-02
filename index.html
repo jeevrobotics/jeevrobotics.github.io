@@ -1016,9 +1016,20 @@
         const n = statements.length;
 
         if (reduced) {
-          statements.forEach((s, i) => {
-            s.style.opacity = i === 0 ? 1 : 0;
-            if (fills[i]) fills[i].style.width = i === 0 ? "100%" : "0%";
+          // Reduced motion: no fades or slides, but still step through every statement as the user scrolls.
+          const show = (k) => statements.forEach((s, i) => {
+            s.style.opacity = i === k ? 1 : 0;
+            s.style.transform = "none";
+            s.classList.toggle("is-active", i === k);
+            if (fills[i]) fills[i].style.width = i <= k ? "100%" : "0%";
+          });
+          show(0);
+          ScrollTrigger.create({
+            trigger: section,
+            start: "top top",
+            end: () => "+=" + window.innerHeight * (n + 0.5),
+            pin: ".thesis-pin",
+            onUpdate: (self) => show(Math.min(n - 1, Math.floor(self.progress * n))),
           });
           return;
         }
