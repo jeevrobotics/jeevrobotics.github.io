@@ -78,20 +78,32 @@
     }
     .nav-links { display: flex; gap: 10px; align-items: center; }
     .nav-pill {
+      appearance: none;
+      -webkit-appearance: none;
       font-size: 13px; font-weight: 500; color: var(--ink-secondary);
       text-decoration: none; padding: 8px 18px;
       border: 1px solid var(--border-strong);
       border-radius: var(--radius-pill);
       background: var(--white);
       font-family: inherit;
+      line-height: 1.2;
       cursor: pointer;
       transition: background 0.3s, border-color 0.3s, color 0.3s;
     }
     .nav-pill:hover { background: var(--surface); border-color: var(--border-strong); }
-    .nav-pill--accent {
-      background: var(--accent); border-color: transparent; color: var(--white);
+    .nav-pill--accent,
+    button.nav-pill--accent {
+      background: var(--accent);
+      border-color: transparent;
+      color: var(--white);
     }
-    .nav-pill--accent:hover { background: var(--accent-hover); filter: none; }
+    .nav-pill--accent:hover,
+    button.nav-pill--accent:hover {
+      background: var(--accent-hover);
+      border-color: transparent;
+      color: var(--white);
+      filter: none;
+    }
 
     /* ── HERO ── */
     .hero {
@@ -608,6 +620,13 @@
       width: 100%; height: 100%;
       object-fit: cover; display: block;
     }
+    .gallery-card-media--contain {
+      background: #fff;
+    }
+    .gallery-card-media--contain img {
+      object-fit: contain;
+      padding: 10px;
+    }
     .gallery-card-body { padding: 28px 28px 32px; }
     .gallery-card-crop {
       font-size: 11px; font-weight: 600;
@@ -692,6 +711,11 @@
     .crop-compare img {
       width: 100%; aspect-ratio: 4 / 3;
       object-fit: cover; display: block;
+    }
+    .crop-compare img.is-contain {
+      object-fit: contain;
+      background: #fff;
+      padding: 8px;
     }
     .crop-compare figcaption {
       padding: 12px 14px 14px;
@@ -809,12 +833,17 @@
     }
     .cta-button {
       display: inline-flex;
+      align-items: center;
+      justify-content: center;
       padding: 16px 32px;
       font-size: 15px; font-weight: 500;
+      font-family: inherit;
       color: var(--white);
       background: var(--accent);
+      border: none;
       border-radius: var(--radius-pill);
       text-decoration: none;
+      cursor: pointer;
       transition: background 0.3s, transform 0.3s var(--ease);
     }
     .cta-button:hover { background: var(--accent-hover); transform: translateY(-2px); }
@@ -837,9 +866,7 @@
 </head>
 <body>
 
-  <!-- Replace PLACEHOLDERs after creating the Google Form / Formspree inbox -->
   <script id="fal-config">
-    window.FAL_ACCESS_FORM = "https://forms.gle/PLACEHOLDER_SUBMIT_AFTER_CREATING_FORM";
     window.FAL_CONTACT_EMAIL = "hello@falrobotics.com";
     /* Optional: Formspree endpoint for true in-browser send. Example: https://formspree.io/f/xxxx */
     window.FAL_CONTACT_ENDPOINT = "";
@@ -851,8 +878,7 @@
     <a href="#" class="nav-logo">Fal Robotics</a>
     <div class="nav-links">
       <a href="#platforms" class="nav-pill">Platform</a>
-      <button type="button" class="nav-pill" id="contactOpen">Contact</button>
-      <a href="#" class="nav-pill nav-pill--accent access-form-link">Request Access</a>
+      <button type="button" class="nav-pill nav-pill--accent" id="contactOpen">Contact</button>
     </div>
   </nav>
 
@@ -1077,11 +1103,11 @@
         </div>
       </button>
       <button type="button" class="gallery-card" data-crop="grapes">
-        <div class="gallery-card-media"><img src="assets/gallery/grape_rows.jpg" alt="Vertical vineyard rows" loading="lazy"></div>
+        <div class="gallery-card-media"><img src="assets/gallery/grape_pergola2.jpg" alt="Grape vines on a pergola trellis" loading="lazy"></div>
         <div class="gallery-card-body">
           <p class="gallery-card-crop">Grapes</p>
-          <h3>Trellis Systems</h3>
-          <p>Vertical rows, old-vine cordon, and pergola: cluster position and stem access change with every training system.</p>
+          <h3>Head-trained vs. Pergola</h3>
+          <p>Old-vine head canopies and overhead pergola training put clusters in very different reach envelopes.</p>
           <p class="gallery-card-hint">Click to compare</p>
         </div>
       </button>
@@ -1094,8 +1120,17 @@
           <p class="gallery-card-hint">Click to compare</p>
         </div>
       </button>
+      <button type="button" class="gallery-card" data-crop="avocados">
+        <div class="gallery-card-media"><img src="assets/gallery/avocado_hd.jpg" alt="High-density avocado orchard rows" loading="lazy"></div>
+        <div class="gallery-card-body">
+          <p class="gallery-card-crop">Avocados</p>
+          <h3>Open Canopy vs. High Density</h3>
+          <p>Wide-spaced mature trees hide fruit high in a deep canopy. High-density blocks keep trees short and tight.</p>
+          <p class="gallery-card-hint">Click to compare</p>
+        </div>
+      </button>
       <button type="button" class="gallery-card" data-crop="custom">
-        <div class="gallery-card-media"><img src="assets/gallery/custom_field.jpg" alt="Agricultural fields from above" loading="lazy"></div>
+        <div class="gallery-card-media gallery-card-media--contain"><img src="assets/gallery/custom_field.jpg" alt="United States census regions and divisions map" loading="lazy"></div>
         <div class="gallery-card-body">
           <p class="gallery-card-crop">Your Crop, Your Region</p>
           <h3>Added to the Distribution</h3>
@@ -1160,7 +1195,7 @@
   <section class="section-cta" id="cta">
     <h2 class="cta-brand">Fal Robotics</h2>
     <p class="cta-sub">The simulation layer for agricultural robotics</p>
-    <a href="#" class="cta-button access-form-link" id="ctaButton">Request Access</a>
+    <button type="button" class="cta-button" id="ctaContactOpen">Contact</button>
     <p class="site-footer">© 2026 Fal Robotics · All rights reserved</p>
   </section>
 
@@ -1170,13 +1205,6 @@
 
       const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       gsap.registerPlugin(ScrollTrigger);
-
-      /* Wire all Request Access buttons to Google Form */
-      document.querySelectorAll(".access-form-link").forEach((link) => {
-        link.href = window.FAL_ACCESS_FORM;
-        link.target = "_blank";
-        link.rel = "noopener noreferrer";
-      });
 
       /* ── Scroll progress ── */
       ScrollTrigger.create({
@@ -1434,12 +1462,11 @@
           },
           grapes: {
             kicker: "Grapes",
-            title: "Trellis systems",
-            copy: "Cluster height and stem access shift with the training system and vintage.",
+            title: "Head-trained vs. pergola",
+            copy: "Same crop, two training geometries. Cluster height and stem access are not interchangeable.",
             variants: [
-              { img: "assets/gallery/grape_rows.jpg", label: "Vertical rows", note: "Upright canopy wall: clusters along a narrow vertical plane." },
-              { img: "assets/gallery/grape_cordon.jpg", label: "Old-vine cordon / head", note: "Thick trunks and irregular arms: deeper occlusion, variable detachment." },
-              { img: "assets/gallery/grape_pergola.jpg", label: "Pergola", note: "Overhead canopy: clusters hang below, reach and occlusion invert." },
+              { img: "assets/gallery/grape_cordon.jpg", label: "Old-vine head / cordon", note: "Thick trunks and irregular arms: deeper occlusion, variable detachment height." },
+              { img: "assets/gallery/grape_pergola2.jpg", label: "Pergola", note: "Overhead canopy on posts and beams: clusters hang below, reach and occlusion invert." },
             ],
           },
           peppers: {
@@ -1452,12 +1479,21 @@
               { img: "assets/gallery/pepper_red.jpg", label: "Fruit close-up", note: "Detachment and bruise risk vary with cultivar and maturity." },
             ],
           },
+          avocados: {
+            kicker: "Avocados",
+            title: "Open canopy vs. high density",
+            copy: "Same Hass-type fruit, two orchard geometries. Reach height, alley width, and occlusion are not interchangeable.",
+            variants: [
+              { img: "assets/gallery/avocado_nz.jpg", label: "Open canopy orchard", note: "Traditional wide spacing: tall spreading trees, fruit high in a deep canopy, wider approach alleys." },
+              { img: "assets/gallery/avocado_hd.jpg", label: "High-density planting", note: "Tight grid (about 2.5 m): trees held short for pick access, denser walls, different occlusion and reach." },
+            ],
+          },
           custom: {
             kicker: "Your crop, your region",
             title: "Added to the distribution",
             copy: "We fold your fields into the training set before a robot arrives. Same stack, new samples from your region.",
             variants: [
-              { img: "assets/gallery/custom_field.jpg", label: "Your region", note: "Tell us crop, training system, and geography." },
+              { img: "assets/gallery/custom_field.jpg", label: "Your region", note: "West, Midwest, Northeast, South: tell us where you grow and we add that geography to the distribution.", fit: "contain" },
               { img: "assets/gallery/field_rows.jpg", label: "Your spacing", note: "Row width, canopy height, and season become simulation parameters." },
               { img: "assets/gallery/greenhouse.jpg", label: "Your structure", note: "Open field, tunnel, or glasshouse: each is another world to cover." },
             ],
@@ -1472,7 +1508,7 @@
           copy.textContent = data.copy;
           compare.innerHTML = data.variants.map((v) => `
             <figure>
-              <img src="${v.img}" alt="${v.label}" loading="lazy">
+              <img src="${v.img}" alt="${v.label}" loading="lazy"${v.fit === "contain" ? ' class="is-contain"' : ""}>
               <figcaption>
                 <strong>${v.label}</strong>
                 <span>${v.note}</span>
@@ -1547,11 +1583,12 @@
       function initContactModal() {
         const modal = document.getElementById("contactModal");
         const openBtn = document.getElementById("contactOpen");
+        const ctaOpenBtn = document.getElementById("ctaContactOpen");
         const closeBtn = document.getElementById("contactClose");
         const form = document.getElementById("contactForm");
         const status = document.getElementById("contactStatus");
         const submitBtn = document.getElementById("contactSubmit");
-        if (!modal || !openBtn || !form) return;
+        if (!modal || !form) return;
 
         const setStatus = (msg, kind) => {
           status.textContent = msg || "";
@@ -1599,7 +1636,8 @@
           return true;
         };
 
-        openBtn.addEventListener("click", open);
+        if (openBtn) openBtn.addEventListener("click", open);
+        if (ctaOpenBtn) ctaOpenBtn.addEventListener("click", open);
         closeBtn.addEventListener("click", close);
         modal.addEventListener("click", (e) => { if (e.target === modal) close(); });
         document.addEventListener("keydown", (e) => {
