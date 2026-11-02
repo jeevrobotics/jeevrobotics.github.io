@@ -370,10 +370,11 @@
       letter-spacing: -0.03em;
       line-height: 1.2;
       color: var(--ink);
-      opacity: 0; visibility: hidden;
+      opacity: 0;
       padding: 0 1rem;
+      pointer-events: none;
     }
-    .thesis-statement.is-active { visibility: visible; }
+    .thesis-statement.is-active { pointer-events: auto; }
     .thesis-progress {
       display: flex; gap: 6px; justify-content: center;
       margin-top: 56px; height: 2px;
@@ -1015,14 +1016,20 @@
         const fills = gsap.utils.toArray(".thesis-progress-fill");
         const n = statements.length;
 
+        const setActive = (k) => {
+          statements.forEach((s, i) => s.classList.toggle("is-active", i === k));
+        };
+
         if (reduced) {
           // Reduced motion: no fades or slides, but still step through every statement as the user scrolls.
-          const show = (k) => statements.forEach((s, i) => {
-            s.style.opacity = i === k ? 1 : 0;
-            s.style.transform = "none";
-            s.classList.toggle("is-active", i === k);
-            if (fills[i]) fills[i].style.width = i <= k ? "100%" : "0%";
-          });
+          const show = (k) => {
+            statements.forEach((s, i) => {
+              s.style.opacity = i === k ? 1 : 0;
+              s.style.transform = "none";
+              if (fills[i]) fills[i].style.width = i <= k ? "100%" : "0%";
+            });
+            setActive(k);
+          };
           show(0);
           ScrollTrigger.create({
             trigger: section,
@@ -1037,6 +1044,7 @@
         gsap.set(statements, { opacity: 0, y: 32 });
         gsap.set(statements[0], { opacity: 1, y: 0 });
         gsap.set(fills, { width: "0%" });
+        setActive(0);
 
         const tl = gsap.timeline({
           scrollTrigger: {
@@ -1046,6 +1054,7 @@
             pin: ".thesis-pin",
             scrub: 0.8,
             anticipatePin: 1,
+            onUpdate: (self) => setActive(Math.min(n - 1, Math.floor(self.progress * n))),
           },
         });
 
