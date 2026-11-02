@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fal Robotics — The foundation model for plant manipulation</title>
-  <meta name="description" content="Generalized control intelligence for agricultural robots. One learned brain for assess, harvest, and prune — across crops, from simulation to hardware." />
+  <title>Fal Robotics — The simulation layer for agricultural robotics</title>
+  <meta name="description" content="Fal Robotics builds realistic, field-accurate simulation for agricultural robots — capturing how the same crop varies from farm to farm and state to state — so policies trained in simulation deploy zero-shot in the field." />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -545,7 +545,7 @@
   <nav class="nav" id="nav">
     <a href="#" class="nav-logo">Fal Robotics</a>
     <div class="nav-links">
-      <a href="#platforms" class="nav-pill">Platforms</a>
+      <a href="#platforms" class="nav-pill">Platform</a>
       <a href="#" class="nav-pill nav-pill--accent access-form-link">Request Access</a>
     </div>
   </nav>
@@ -554,13 +554,13 @@
   <header class="hero" id="hero">
     <div class="hero-intro" id="heroIntro">
       <p class="hero-brand">Fal Robotics</p>
-      <p class="hero-eyebrow">Control intelligence for agricultural robotics</p>
+      <p class="hero-eyebrow">The simulation layer for agricultural robotics</p>
     </div>
 
     <h1 class="hero-headline" id="heroHeadline">
-      <span class="hl-line"><span class="hl-soft">Any</span> crop.</span>
-      <span class="hl-line"><span class="hl-soft">Any</span> task.</span>
-      <span class="hl-line"><span class="hl-soft">One</span> brain.</span>
+      <span class="hl-line"><span class="hl-soft">Every</span> field.</span>
+      <span class="hl-line"><span class="hl-soft">Every</span> season.</span>
+      <span class="hl-line"><span class="hl-soft">Zero</span>-shot.</span>
     </h1>
 
     <div class="hero-video-wrap" id="heroVideoWrap">
@@ -580,7 +580,7 @@
     </div>
 
     <p class="hero-tag" id="heroTag">
-      The foundation model for plant manipulation — trained in simulation, deployed on real hardware.
+      Simulation realistic and varied enough that a robot trained in it works on a farm it has never seen — no fine-tuning in the field.
     </p>
   </header>
 
@@ -599,9 +599,9 @@
       </div>
       <div class="overview-copy reveal-block">
         <span class="tag-pill">Overview</span>
-        <h2>Bringing <strong>intelligence</strong> into the field.</h2>
+        <h2>Agriculture is not one world. It is <strong>millions</strong> of them.</h2>
         <p>
-          Most agricultural automation still assumes rigid worlds. Plants bend, fruit detaches unpredictably, and every canopy is different. We are building AI that understands physical interaction with living crops — and transfers that knowledge from simulation to real robots.
+          Take a single crop. The same strawberry variety grows on raised beds in California and flat plasticulture in Florida; the same apple cultivar is trained as a trellised wall in one orchard and a free-standing tree in the next. Canopy density, fruit position, stem stiffness, soil, light and weather all shift from field to field and state to state. A policy trained on one farm breaks on the next. We build simulation that captures this variation faithfully — so a robot trained in it has, in effect, already seen your field.
         </p>
       </div>
     </div>
@@ -613,10 +613,10 @@
       <div class="thesis-inner">
         <p class="thesis-label">Our Thesis</p>
         <div class="thesis-statements">
-          <p class="thesis-statement is-active" data-i="0">Physical AI for agriculture should be crop-agnostic.</p>
-          <p class="thesis-statement" data-i="1">A brain that understands plants should not be limited by robot or task type.</p>
-          <p class="thesis-statement" data-i="2">We tackle plant manipulation in its full generality.</p>
-          <p class="thesis-statement" data-i="3">One unified policy stack — assess, harvest, prune — across any crop.</p>
+          <p class="thesis-statement is-active" data-i="0">Agriculture is not one environment. It is a distribution of them.</p>
+          <p class="thesis-statement" data-i="1">A robot that works on one farm should not fail on the next.</p>
+          <p class="thesis-statement" data-i="2">Realism and variation in simulation are what make zero-shot transfer possible.</p>
+          <p class="thesis-statement" data-i="3">Train well enough in simulation, and the field is just another sample.</p>
         </div>
         <div class="thesis-progress" aria-hidden="true">
           <div class="thesis-progress-seg"><div class="thesis-progress-fill" data-fill="0"></div></div>
@@ -631,9 +631,9 @@
   <!-- PLATFORMS -->
   <section class="section-platforms" id="platforms">
     <div class="platforms-intro reveal-block">
-      <span class="tag-pill">Platforms</span>
-      <h2>Robot applications that deliver real-world value.</h2>
-      <p>To stay grounded on our journey, we build capabilities that work in actual orchards, greenhouses, and packing lines.</p>
+      <span class="tag-pill">Platform</span>
+      <h2>Simulation infrastructure built for agriculture.</h2>
+      <p>General-purpose simulators treat a field as a scene. We treat it as a living system with regional, seasonal and cultivar-level variation — and give you the tools to train and evaluate against all of it.</p>
     </div>
 
     <div class="platform-list">
@@ -648,8 +648,8 @@
           </svg>
         </div>
         <div class="platform-copy">
-          <h3>Perception &amp; Assessment</h3>
-          <p>Vision models interpret plant geometry beneath dense canopy — detecting fruit maturity, stem compliance, and regions that must not be damaged.</p>
+          <h3>Field-Accurate Worlds</h3>
+          <p>Procedural crops grown from agronomic ground truth — plant architecture, training system, canopy density, fruit distribution, soil and lighting — conditioned on region, season and cultivar. Not one generic orchard, but the spread of orchards your robot will actually meet.</p>
         </div>
       </article>
 
@@ -664,8 +664,8 @@
           </svg>
         </div>
         <div class="platform-copy">
-          <h3>Harvest &amp; Manipulation</h3>
-          <p>Contact-rich control policies for harvesting, pruning, pick-and-place, and selective cutting — learned in simulation, deployed on real arms.</p>
+          <h3>Physics of Living Plants</h3>
+          <p>Deformable stems, branch compliance, fruit detachment forces, occlusion and contact modeled to match what a gripper feels in the field. Interaction realism is the part of the sim-to-real gap that matters most for manipulation — so it is where we spend our effort.</p>
         </div>
       </article>
 
@@ -685,8 +685,8 @@
           </svg>
         </div>
         <div class="platform-copy">
-          <h3>Simulation Pipeline</h3>
-          <p>Procedural orchards from Helios, imported into Isaac Sim for camera data, physics interaction, and RL training — one command, any scale.</p>
+          <h3>Evaluate, Then Train</h3>
+          <p>Stress-test an existing policy across thousands of field variants to find where it breaks, then close those gaps with targeted domain randomization and RL. Built on Helios plant models and Isaac Sim — one command, any scale.</p>
         </div>
       </article>
     </div>
@@ -697,13 +697,13 @@
     <div class="simreal-inner">
       <div class="simreal-panel reveal-block">
         <h4>Training</h4>
-        <h3>Trained in simulation</h3>
-        <p>Thousands of randomized plant morphologies, lighting conditions, and contact scenarios — generated in parallel. Training cycles that would take years in the field happen overnight.</p>
+        <h3>Train across the distribution</h3>
+        <p>Thousands of fields, cultivars, seasons and contact scenarios run in parallel. The variation a robot would take a decade of field seasons to encounter is covered in a single training run.</p>
       </div>
       <div class="simreal-panel reveal-block">
         <h4>Deployment</h4>
-        <h3>Deployed on real hardware</h3>
-        <p>The same policy weights run directly on field robots. Sim-to-real transfer is built into the training objective from day one — not bolted on later.</p>
+        <h3>Deploy zero-shot</h3>
+        <p>The same policy weights go straight onto the field robot. No per-farm data collection, no on-site fine-tuning. If the simulation is realistic and varied enough, the real field is just one more sample from the training distribution.</p>
       </div>
     </div>
   </section>
@@ -712,16 +712,16 @@
   <section class="section-stats" id="stats">
     <div class="stats-grid">
       <div class="stat-item reveal-block">
-        <div class="stat-value">&gt;<span class="stat-number" data-target="80">0</span>%</div>
-        <p class="stat-label">Task success across initial deployment partners</p>
+        <div class="stat-value"><span class="stat-number" data-target="0">0</span></div>
+        <p class="stat-label">Field fine-tuning steps before deployment — the target is zero-shot</p>
       </div>
       <div class="stat-item reveal-block">
         <div class="stat-value"><span class="stat-number" data-target="10000" data-compact="1">0</span>+</div>
-        <p class="stat-label">Parallel simulation trials per training cycle</p>
+        <p class="stat-label">Parallel field variants per training run</p>
       </div>
       <div class="stat-item reveal-block">
         <div class="stat-value">1</div>
-        <p class="stat-label">Unified policy across crops and manipulation tasks</p>
+        <p class="stat-label">Simulation stack across crops, regions and seasons</p>
       </div>
     </div>
   </section>
@@ -729,16 +729,16 @@
   <!-- GALLERY -->
   <section class="section-gallery" id="gallery">
     <div class="gallery-header reveal-block">
-      <span class="tag-pill">Generalization</span>
-      <h2>One policy stack. Any crop you run.</h2>
-      <p>Adapts to new plant morphologies without rebuilding the robotics platform.</p>
+      <span class="tag-pill">Variation</span>
+      <h2>Same crop. Different world.</h2>
+      <p>Every card is one crop. Each is also dozens of fields that look nothing alike — and all of them are in the simulation.</p>
     </div>
     <div class="gallery-track" id="galleryTrack">
-      <article class="gallery-card"><p class="gallery-card-crop">Strawberries</p><h3>Precision Harvest</h3><p>Navigate dense foliage and delicate stems without bruising.</p></article>
-      <article class="gallery-card"><p class="gallery-card-crop">Apples</p><h3>Pick &amp; Place</h3><p>Cultivar-specific detachment forces for premium pack-out quality.</p></article>
-      <article class="gallery-card"><p class="gallery-card-crop">Grapes</p><h3>Selective Cutting</h3><p>Force-guided stem cutting inside constrained canopies.</p></article>
-      <article class="gallery-card"><p class="gallery-card-crop">Peppers</p><h3>Targeted Picking</h3><p>Flexible branch manipulation without damaging neighbors.</p></article>
-      <article class="gallery-card"><p class="gallery-card-crop">Your Crop</p><h3>Custom Tasks</h3><p>Fine-tune in simulation, deploy without rewriting the stack.</p></article>
+      <article class="gallery-card"><p class="gallery-card-crop">Strawberries</p><h3>Beds, Tunnels, Tabletops</h3><p>Raised beds in Watsonville, plasticulture in Florida, tabletop troughs in a Dutch greenhouse — one berry, three canopies.</p></article>
+      <article class="gallery-card"><p class="gallery-card-crop">Apples</p><h3>Wall vs. Tree</h3><p>A tall-spindle trellis in Washington and a central-leader orchard in Michigan hide the same fruit very differently.</p></article>
+      <article class="gallery-card"><p class="gallery-card-crop">Grapes</p><h3>Trellis Systems</h3><p>VSP, quadrilateral cordon, pergola — cluster position and stem access change with every training system and vintage.</p></article>
+      <article class="gallery-card"><p class="gallery-card-crop">Peppers</p><h3>Open Field vs. Glasshouse</h3><p>Staked field rows in Georgia and high-wire greenhouse vines in Ontario demand different reaches and detachment forces.</p></article>
+      <article class="gallery-card"><p class="gallery-card-crop">Your Crop, Your Region</p><h3>Added to the Distribution</h3><p>Tell us where you grow. We model your fields and fold them into the training set — before a robot ever arrives.</p></article>
     </div>
     <div class="gallery-spacer" id="gallerySpacer"></div>
   </section>
@@ -746,7 +746,7 @@
   <!-- CTA -->
   <section class="section-cta" id="cta">
     <h2 class="cta-brand">Fal Robotics</h2>
-    <p class="cta-sub">The foundation model for plant manipulation</p>
+    <p class="cta-sub">The simulation layer for agricultural robotics</p>
     <a href="#" class="cta-button access-form-link" id="ctaButton">Request Access</a>
     <p class="site-footer">© 2026 Fal Robotics · All rights reserved</p>
   </section>
