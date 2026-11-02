@@ -269,6 +269,15 @@
     }
     .compare-media figure { position: relative; }
     .compare-cap { position: absolute; left: 12px; bottom: 10px; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); background: rgba(255,255,255,.85); padding: 3px 8px; border-radius: 999px; }
+    .compare-credit {
+      padding: 10px 16px 12px;
+      font-size: 0.68rem;
+      line-height: 1.45;
+      color: var(--muted-light);
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+    .compare-credit a { color: var(--muted); }
     .compare-media-fallback {
       width: 100%;
       height: 100%;
@@ -706,14 +715,20 @@
           </div>
           <div class="compare-media">
             <figure>
-              <img src="assets/variant_wa.jpg" alt="Simulated Washington fruiting wall: tall-spindle apple trees planted three feet apart" loading="lazy">
-              <figcaption class="compare-cap">WA · Fruiting wall</figcaption>
+              <img src="assets/variant_wa.jpg" alt="Washington tall-spindle apple rows near Parker / Yakima Valley — narrow fruiting walls with a clear drive alley between rows" loading="lazy">
+              <figcaption class="compare-cap">WA · ~3 ft wall</figcaption>
             </figure>
             <figure>
-              <img src="assets/variant_ca.jpg" alt="Simulated California free-standing apple trees on wide spacing" loading="lazy">
-              <figcaption class="compare-cap">CA · Free-standing</figcaption>
+              <img src="assets/variant_ca.jpg" alt="California free-standing apple orchard with wide tree spacing and open ground between trunks" loading="lazy">
+              <figcaption class="compare-cap">CA · Wide spacing</figcaption>
             </figure>
           </div>
+          <p class="compare-credit">
+            Photos:
+            <a href="https://commons.wikimedia.org/wiki/File:Orchards_8017.jpg" target="_blank" rel="noopener">Parker / Yakima Valley orchard</a> (Chris Light, CC BY-SA 4.0);
+            <a href="https://commons.wikimedia.org/wiki/File:Apple_orchard_-_May_2023_-_Sarah_Stierch_01.jpg" target="_blank" rel="noopener">Sebastopol apple orchard</a> (Sarah Stierch, CC BY 4.0).
+            CA panel is Sonoma County — closest open-license free-standing canopy match; true Central Valley apple stills are scarce.
+          </p>
           <dl class="compare-rows">
             <div class="compare-row">
               <dt>Training system</dt>
@@ -782,7 +797,7 @@
     <div class="platforms-intro reveal-block">
       <span class="tag-pill">Platform</span>
       <h2>Simulation infrastructure built for agriculture.</h2>
-      <p>General-purpose simulators treat a field as a scene. We treat it as a living system with regional, seasonal and cultivar-level variation — and give you the tools to train and evaluate against all of it.</p>
+      <p>General-purpose simulators treat a field as a scene. We treat it as a living system with regional, seasonal and cultivar-level variation — and give you the tools to train and evaluate against all of it. The plant below is corn, not apple: the same stack models deformable physics across crops, so the point is variability — we can do this for any crop you run.</p>
     </div>
 
     <div class="platform-list">
