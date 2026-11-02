@@ -765,17 +765,13 @@
         <p class="thesis-label">Our Thesis</p>
         <div class="thesis-statements">
           <p class="thesis-statement is-active" data-i="0">Agriculture is not one environment. It is a distribution of them.</p>
-          <p class="thesis-statement" data-i="1">A robot that works on one farm should not fail on the next.</p>
-          <p class="thesis-statement" data-i="2">A robot should not need to see your farm before it works on your farm.</p>
-          <p class="thesis-statement" data-i="3">Realism and variation in simulation are what make zero-shot transfer possible.</p>
-          <p class="thesis-statement" data-i="4">Train well enough in simulation, and the field is just another sample.</p>
+          <p class="thesis-statement" data-i="1">A robot should not need to see your farm before it works on your farm.</p>
         </div>
         <div class="thesis-progress" aria-hidden="true">
           <div class="thesis-progress-seg"><div class="thesis-progress-fill" data-fill="0"></div></div>
           <div class="thesis-progress-seg"><div class="thesis-progress-fill" data-fill="1"></div></div>
           <div class="thesis-progress-seg"><div class="thesis-progress-fill" data-fill="2"></div></div>
           <div class="thesis-progress-seg"><div class="thesis-progress-fill" data-fill="3"></div></div>
-          <div class="thesis-progress-seg"><div class="thesis-progress-fill" data-fill="4"></div></div>
         </div>
       </div>
     </div>
@@ -790,23 +786,6 @@
     </div>
 
     <div class="platform-list">
-      <article class="platform-item reveal-block">
-        <div class="platform-visual">
-          <svg viewBox="0 0 480 300" fill="none">
-            <rect width="480" height="300" fill="#eef1ff"/>
-            <line class="scan" x1="0" y1="80" x2="480" y2="80" stroke="#4a5ae8" stroke-width="1" opacity="0.5"/>
-            <ellipse cx="280" cy="130" rx="28" ry="40" fill="rgba(74,90,232,0.1)" stroke="#7b8cff" stroke-width="0.8"/>
-            <rect x="240" y="95" width="80" height="65" rx="3" fill="none" stroke="#4a5ae8" stroke-width="0.8" opacity="0.65"/>
-            <path d="M120 250 L200 180 L280 150 L360 165" stroke="#111115" stroke-width="1.2" opacity="0.18"/>
-          </svg>
-        </div>
-        <div class="platform-copy">
-          <h3>Field-Accurate Worlds</h3>
-          <p>Procedural crops grown from agronomic ground truth — plant architecture, training system, canopy density, fruit distribution, soil and lighting — conditioned on region, season and cultivar. Not one generic orchard, but the spread of orchards your robot will actually meet.</p>
-        </div>
-      </article>
-
-
       <article class="platform-item reveal-block">
         <div class="platform-visual">
           <div class="vs-slider" id="maizeCompare" aria-label="Maize plant and its simulation mesh">
@@ -1015,28 +994,37 @@
         const statements = gsap.utils.toArray(".thesis-statement");
         const fills = gsap.utils.toArray(".thesis-progress-fill");
         const n = statements.length;
+        const slidersPerLine = 2;
+        const steps = n * slidersPerLine;
 
         const setActive = (k) => {
           statements.forEach((s, i) => s.classList.toggle("is-active", i === k));
         };
 
+        const applyFills = (step) => {
+          fills.forEach((fill, i) => {
+            fill.style.width = i <= step ? "100%" : "0%";
+          });
+        };
+
         if (reduced) {
-          // Reduced motion: no fades or slides, but still step through every statement as the user scrolls.
-          const show = (k) => {
+          // Reduced motion: snap statements; two progress segments per line.
+          const show = (step) => {
+            const k = Math.min(n - 1, Math.floor(step / slidersPerLine));
             statements.forEach((s, i) => {
               s.style.opacity = i === k ? 1 : 0;
               s.style.transform = "none";
-              if (fills[i]) fills[i].style.width = i <= k ? "100%" : "0%";
             });
             setActive(k);
+            applyFills(step);
           };
           show(0);
           ScrollTrigger.create({
             trigger: section,
             start: "top top",
-            end: () => "+=" + window.innerHeight * (n + 0.5),
+            end: () => "+=" + window.innerHeight * (steps + 0.5),
             pin: ".thesis-pin",
-            onUpdate: (self) => show(Math.min(n - 1, Math.floor(self.progress * n))),
+            onUpdate: (self) => show(Math.min(steps - 1, Math.floor(self.progress * steps))),
           });
           return;
         }
@@ -1050,23 +1038,28 @@
           scrollTrigger: {
             trigger: section,
             start: "top top",
-            end: () => "+=" + window.innerHeight * (n + 0.5),
+            end: () => "+=" + window.innerHeight * (steps + 0.5),
             pin: ".thesis-pin",
             scrub: 0.8,
             anticipatePin: 1,
-            onUpdate: (self) => setActive(Math.min(n - 1, Math.floor(self.progress * n))),
+            onUpdate: (self) => {
+              const step = Math.min(steps - 1, Math.floor(self.progress * steps));
+              setActive(Math.min(n - 1, Math.floor(step / slidersPerLine)));
+            },
           },
         });
 
+        // Two progress sliders per line; swap copy halfway through.
+        fills.forEach((fill, i) => {
+          const t = i / steps;
+          tl.to(fill, { width: "100%", duration: 1 / steps, ease: "none" }, t);
+        });
+
         statements.forEach((stmt, i) => {
-          if (i === 0) {
-            tl.to(fills[0], { width: "100%", duration: 0.25, ease: "none" }, 0);
-            return;
-          }
-          const t = i / n;
-          tl.to(statements[i - 1], { opacity: 0, y: -28, duration: 0.3, ease: "power2.in" }, t)
-            .to(statements[i], { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, t)
-            .to(fills[i], { width: "100%", duration: 0.25, ease: "none" }, t);
+          if (i === 0) return;
+          const t = (i * slidersPerLine) / steps;
+          tl.to(statements[i - 1], { opacity: 0, y: -28, duration: 0.3 / steps, ease: "power2.in" }, t)
+            .to(stmt, { opacity: 1, y: 0, duration: 0.3 / steps, ease: "power2.out" }, t);
         });
       }
 
