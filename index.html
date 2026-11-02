@@ -267,6 +267,8 @@
       object-fit: cover;
       display: block;
     }
+    .compare-media figure { position: relative; }
+    .compare-cap { position: absolute; left: 12px; bottom: 10px; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); background: rgba(255,255,255,.85); padding: 3px 8px; border-radius: 999px; }
     .compare-media-fallback {
       width: 100%;
       height: 100%;
@@ -703,12 +705,12 @@
           </div>
           <div class="compare-media">
             <figure>
-              <!-- Swap for Helios stills: assets/variant_wa.jpg (or first frame of variant_wa.mp4) -->
-              <div class="compare-media-fallback">WA · Fruiting wall</div>
+              <img src="assets/variant_wa.jpg" alt="Simulated Washington fruiting wall: tall-spindle apple trees planted three feet apart" loading="lazy">
+              <figcaption class="compare-cap">WA · Fruiting wall</figcaption>
             </figure>
             <figure>
-              <!-- Swap for Helios stills: assets/variant_ca.jpg (or first frame of variant_ca.mp4) -->
-              <div class="compare-media-fallback">CA · Free-standing</div>
+              <img src="assets/variant_ca.jpg" alt="Simulated California free-standing apple trees on wide spacing" loading="lazy">
+              <figcaption class="compare-cap">CA · Free-standing</figcaption>
             </figure>
           </div>
           <dl class="compare-rows">
@@ -806,20 +808,6 @@
 
       <article class="platform-item reveal-block">
         <div class="platform-visual">
-          <video class="platform-video" autoplay muted loop playsinline preload="metadata"
-                 poster="assets/grasp_poster.jpg">
-            <source src="assets/grasp_sim_real.mp4" type="video/mp4" />
-          </video>
-        </div>
-        <div class="platform-copy">
-          <h3>Evaluate, Then Train</h3>
-          <p>Stress-test an existing policy across thousands of field variants to find where it breaks, then close those gaps with targeted domain randomization and RL. Built on Helios plant models and Isaac Sim — one command, any scale.</p>
-          <p class="platform-caption">GRASP (2026): a policy trained on deformable plant physics in simulation, deployed zero-shot on a real arm.</p>
-        </div>
-      </article>
-
-      <article class="platform-item reveal-block">
-        <div class="platform-visual">
           <div class="vs-slider" id="maizeCompare" aria-label="Maize plant and its simulation mesh">
             <video class="vs-base" src="assets/maize_mesh.mp4" autoplay muted loop playsinline preload="auto"></video>
             <video class="vs-top" src="assets/maize_plant.mp4" autoplay muted loop playsinline preload="auto"></video>
@@ -833,6 +821,21 @@
           <p>Deformable stems, branch compliance, fruit detachment forces, occlusion and contact modeled to match what a gripper feels in the field. Interaction realism is the part of the sim-to-real gap that matters most for manipulation — so it is where we spend our effort.</p>
         </div>
       </article>
+
+      <article class="platform-item reveal-block">
+        <div class="platform-visual">
+          <video class="platform-video" autoplay muted loop playsinline preload="metadata"
+                 poster="assets/grasp_poster.jpg">
+            <source src="assets/grasp_sim_real.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="platform-copy">
+          <h3>Evaluate, Then Train</h3>
+          <p>Stress-test an existing policy across thousands of field variants to find where it breaks, then close those gaps with targeted domain randomization and RL. Built on Helios plant models and Isaac Sim — one command, any scale.</p>
+          <p class="platform-caption">GRASP (2026): a policy trained on deformable plant physics in simulation, deployed zero-shot on a real arm.</p>
+        </div>
+      </article>
+
     </div>
   </section>
 
