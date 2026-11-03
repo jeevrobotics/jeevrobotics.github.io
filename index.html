@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fal Robotics: The simulation layer for agricultural robotics</title>
-  <meta name="description" content="Fal Robotics builds realistic, field-accurate simulation for agricultural robots, capturing how the same crop varies from farm to farm and state to state, so policies trained in simulation deploy zero-shot in the field." />
+  <title>Jeev Robotics: The simulation layer for agricultural robotics</title>
+  <meta name="description" content="Jeev Robotics builds realistic, field-accurate simulation for agricultural robots, capturing how the same crop varies from farm to farm and state to state, so policies trained in simulation deploy zero-shot in the field." />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -866,16 +866,16 @@
 </head>
 <body>
 
-  <script id="fal-config">
-    window.FAL_CONTACT_EMAIL = "hello@falrobotics.com";
+  <script id="jeev-config">
+    window.JEEV_CONTACT_EMAIL = "hello@jeevrobotics.com";
     /* Optional: Formspree endpoint for true in-browser send. Example: https://formspree.io/f/xxxx */
-    window.FAL_CONTACT_ENDPOINT = "";
+    window.JEEV_CONTACT_ENDPOINT = "";
   </script>
 
   <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
   <nav class="nav" id="nav">
-    <a href="#" class="nav-logo">Fal Robotics</a>
+    <a href="#" class="nav-logo">Jeev Robotics</a>
     <div class="nav-links">
       <a href="#platforms" class="nav-pill">Platform</a>
       <button type="button" class="nav-pill nav-pill--accent" id="contactOpen">Contact</button>
@@ -885,7 +885,7 @@
   <!-- HERO -->
   <header class="hero" id="hero">
     <div class="hero-intro" id="heroIntro">
-      <p class="hero-brand">Fal Robotics</p>
+      <p class="hero-brand">Jeev Robotics</p>
       <p class="hero-eyebrow">The simulation layer for agricultural robotics</p>
     </div>
 
@@ -1193,10 +1193,10 @@
 
   <!-- CTA -->
   <section class="section-cta" id="cta">
-    <h2 class="cta-brand">Fal Robotics</h2>
+    <h2 class="cta-brand">Jeev Robotics</h2>
     <p class="cta-sub">The simulation layer for agricultural robotics</p>
     <button type="button" class="cta-button" id="ctaContactOpen">Contact</button>
-    <p class="site-footer">© 2026 Fal Robotics · All rights reserved</p>
+    <p class="site-footer">© 2026 Jeev Robotics · All rights reserved</p>
   </section>
 
   <script>
@@ -1612,7 +1612,7 @@
         };
 
         const sendViaEndpoint = async (payload) => {
-          const endpoint = window.FAL_CONTACT_ENDPOINT;
+          const endpoint = window.JEEV_CONTACT_ENDPOINT;
           if (!endpoint) return false;
           const res = await fetch(endpoint, {
             method: "POST",
@@ -1624,8 +1624,8 @@
         };
 
         const sendViaMailto = (payload) => {
-          const to = window.FAL_CONTACT_EMAIL || "hello@falrobotics.com";
-          const subject = encodeURIComponent("Fal Robotics contact from " + payload.name);
+          const to = window.JEEV_CONTACT_EMAIL || "hello@jeevrobotics.com";
+          const subject = encodeURIComponent("Jeev Robotics contact from " + payload.name);
           const body = encodeURIComponent(
             "Name: " + payload.name + "\n" +
             "Email: " + payload.email + "\n" +
@@ -1673,7 +1673,7 @@
               sendViaMailto(payload);
               setStatus("Opening your email client…", "is-ok");
             } catch (err2) {
-              setStatus("Could not send. Email us at " + (window.FAL_CONTACT_EMAIL || "hello@falrobotics.com") + ".", "is-err");
+              setStatus("Could not send. Email us at " + (window.JEEV_CONTACT_EMAIL || "hello@jeevrobotics.com") + ".", "is-err");
             }
           } finally {
             submitBtn.disabled = false;
