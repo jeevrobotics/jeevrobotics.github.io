@@ -523,6 +523,18 @@
       border: 1px solid var(--border);
       box-shadow: var(--shadow-sm);
     }
+    .simreal-panel-media {
+      margin: 0 0 22px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--white);
+      aspect-ratio: 16 / 10;
+    }
+    .simreal-panel-media video {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
     .simreal-panel h4 {
       font-size: 11px; font-weight: 600;
       letter-spacing: 0.12em; text-transform: uppercase;
@@ -1061,6 +1073,11 @@
   <section class="section-simreal" id="simreal">
     <div class="simreal-inner">
       <div class="simreal-panel reveal-block">
+        <div class="simreal-panel-media">
+          <video class="platform-video" autoplay muted loop playsinline preload="metadata">
+            <source src="assets/push_1.mp4" type="video/mp4" />
+          </video>
+        </div>
         <h4>Training</h4>
         <h3>Train across the distribution</h3>
         <p>Thousands of fields, cultivars, seasons and contact scenarios run in parallel. The variation a robot would take a decade of field seasons to encounter is covered in a single training run.</p>
