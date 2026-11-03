@@ -73,8 +73,15 @@
       border-bottom: 1px solid var(--border);
     }
     .nav-logo {
-      font-size: clamp(14px, 1.4vw, 17px); font-weight: 600; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--ink); text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      line-height: 0;
+    }
+    .nav-logo img {
+      height: clamp(28px, 3.2vw, 36px);
+      width: auto;
+      display: block;
     }
     .nav-links { display: flex; gap: 10px; align-items: center; }
     .nav-pill {
@@ -122,12 +129,10 @@
     }
 
     .hero-brand {
-      font-size: clamp(2.25rem, 5.5vw, 4rem);
-      font-weight: 500;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      color: var(--ink);
-      margin-bottom: clamp(10px, 1.5vh, 16px);
+      display: block;
+      margin: 0 auto clamp(14px, 2vh, 22px);
+      width: min(420px, 72vw);
+      height: auto;
     }
 
     .hero-eyebrow {
@@ -818,11 +823,10 @@
       text-align: center;
     }
     .cta-brand {
-      font-size: clamp(2.5rem, 8vw, 5rem);
-      font-weight: 500;
-      letter-spacing: -0.04em;
-      margin-bottom: 12px;
-      color: var(--white);
+      display: block;
+      margin: 0 auto 16px;
+      width: min(380px, 70vw);
+      height: auto;
     }
     .cta-sub {
       font-size: 13px;
@@ -875,7 +879,9 @@
   <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
   <nav class="nav" id="nav">
-    <a href="#" class="nav-logo">Jeev Robotics</a>
+    <a href="#" class="nav-logo" aria-label="Jeev Robotics">
+      <img src="assets/logo_lockup.png" alt="Jeev Robotics" />
+    </a>
     <div class="nav-links">
       <a href="#platforms" class="nav-pill">Platform</a>
       <button type="button" class="nav-pill nav-pill--accent" id="contactOpen">Contact</button>
@@ -885,7 +891,7 @@
   <!-- HERO -->
   <header class="hero" id="hero">
     <div class="hero-intro" id="heroIntro">
-      <p class="hero-brand">Jeev Robotics</p>
+      <img class="hero-brand" src="assets/logo_lockup.png" alt="Jeev Robotics" />
       <p class="hero-eyebrow">The simulation layer for the biological world</p>
     </div>
 
@@ -1193,7 +1199,7 @@
 
   <!-- CTA -->
   <section class="section-cta" id="cta">
-    <h2 class="cta-brand">Jeev Robotics</h2>
+    <img class="cta-brand" src="assets/logo_lockup_dark.png" alt="Jeev Robotics" />
     <p class="cta-sub">The simulation layer for the biological world</p>
     <button type="button" class="cta-button" id="ctaContactOpen">Contact</button>
     <p class="site-footer">© 2026 Jeev Robotics · All rights reserved</p>
