@@ -461,11 +461,6 @@
       .platform-item:nth-child(even) .platform-visual { order: -1; }
     }
     .platform-item:nth-child(even) .platform-copy { order: 2; }
-    .platform-item--copy {
-      grid-template-columns: 1fr;
-      max-width: 720px;
-    }
-    .platform-item--copy .platform-copy { order: 0; }
     .platform-visual {
       aspect-ratio: 16 / 10;
       border-radius: 20px;
@@ -1057,10 +1052,15 @@
         </div>
       </article>
 
-      <article class="platform-item platform-item--copy reveal-block">
+      <article class="platform-item reveal-block">
+        <div class="platform-visual">
+          <video class="platform-video" autoplay muted loop playsinline preload="metadata">
+            <source src="assets/interaction_3.mp4" type="video/mp4" />
+          </video>
+        </div>
         <div class="platform-copy">
-          <h3>Evaluate, Then Train</h3>
-          <p>Stress-test an existing policy across thousands of field variants to find where it breaks, then close those gaps with targeted domain randomization and RL. Built on Helios plant models and Isaac Sim. One command, any scale.</p>
+          <h3>Contact that the gripper feels</h3>
+          <p>Leaf push, stem bend, and fruit give modeled as continuous interaction, not rigid props. The forces and compliance a policy learns in simulation are the ones it meets in the field.</p>
         </div>
       </article>
 
