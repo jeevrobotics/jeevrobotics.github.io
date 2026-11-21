@@ -185,6 +185,14 @@
       transform: scale(1.04);
       transform-origin: center center;
       will-change: transform;
+      position: absolute; inset: 0;
+      opacity: 0;
+      transition: opacity 0.45s var(--ease);
+      pointer-events: none;
+    }
+    .hero-video.is-active {
+      opacity: 1;
+      pointer-events: auto;
     }
 
     .hero-video-fade {
@@ -197,12 +205,65 @@
       );
       opacity: 0.55;
       transition: opacity 0.3s;
+      z-index: 2;
     }
 
     .hero-video-vignette {
       position: absolute; inset: 0; pointer-events: none;
       box-shadow: inset 0 0 80px rgba(17, 17, 21, 0.08);
       border-radius: 0;
+      z-index: 2;
+    }
+
+    .hero-video-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 3;
+      width: 44px; height: 44px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      background: rgba(17, 17, 21, 0.35);
+      color: #fff;
+      backdrop-filter: blur(8px);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 1.35rem;
+      line-height: 1;
+      transition: background 0.25s, border-color 0.25s, transform 0.25s;
+    }
+    .hero-video-nav:hover {
+      background: rgba(17, 17, 21, 0.55);
+      border-color: rgba(255, 255, 255, 0.85);
+    }
+    .hero-video-nav:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    .hero-video-nav--prev { left: clamp(10px, 2vw, 20px); }
+    .hero-video-nav--next { right: clamp(10px, 2vw, 20px); }
+    .hero-video-dots {
+      position: absolute;
+      left: 50%;
+      bottom: 14px;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      gap: 8px;
+    }
+    .hero-video-dot {
+      width: 8px; height: 8px;
+      border-radius: 999px;
+      border: none;
+      padding: 0;
+      background: rgba(255, 255, 255, 0.45);
+      cursor: pointer;
+      transition: background 0.25s, transform 0.25s;
+    }
+    .hero-video-dot.is-active {
+      background: #fff;
+      transform: scale(1.2);
     }
 
     .hero-tag {
@@ -914,19 +975,17 @@
     </h1>
 
     <div class="hero-video-wrap" id="heroVideoWrap">
-      <video
-        id="heroVideo"
-        class="hero-video"
-        muted
-        playsinline
-        autoplay
-        loop
-        preload="auto"
-      >
+      <video class="hero-video is-active" data-hero-slide muted playsinline autoplay loop preload="auto">
         <source src="assets/c3_mixed_ages.mp4" type="video/mp4" />
+      </video>
+      <video class="hero-video" data-hero-slide muted playsinline loop preload="metadata">
+        <source src="assets/strawberry_beds_500.mp4" type="video/mp4" />
       </video>
       <div class="hero-video-fade" id="heroVideoFade"></div>
       <div class="hero-video-vignette"></div>
+      <button type="button" class="hero-video-nav hero-video-nav--prev" id="heroPrev" aria-label="Previous video">‹</button>
+      <button type="button" class="hero-video-nav hero-video-nav--next" id="heroNext" aria-label="Next video">›</button>
+      <div class="hero-video-dots" id="heroDots" role="tablist" aria-label="Hero videos"></div>
     </div>
 
     <p class="hero-tag" id="heroTag">
@@ -1249,34 +1308,76 @@
         onLeaveBack: () => document.getElementById("nav").classList.remove("is-solid"),
       });
 
-      /* ── HERO: smooth autoplay + parallax (no frame scrub) ── */
+      /* ── HERO: carousel + autoplay + parallax ── */
       function initHero() {
-        const video = document.getElementById("heroVideo");
         const wrap = document.getElementById("heroVideoWrap");
         const fade = document.getElementById("heroVideoFade");
         const headline = document.getElementById("heroHeadline");
         const intro = document.getElementById("heroIntro");
         const tag = document.getElementById("heroTag");
+        const slides = Array.from(document.querySelectorAll("[data-hero-slide]"));
+        const prevBtn = document.getElementById("heroPrev");
+        const nextBtn = document.getElementById("heroNext");
+        const dotsWrap = document.getElementById("heroDots");
+        if (!wrap || !slides.length) return;
 
-        const playVideo = () => {
+        let index = Math.max(0, slides.findIndex((v) => v.classList.contains("is-active")));
+        let zoomTween = null;
+
+        const playSlide = (video) => {
           video.playbackRate = 0.85;
           const p = video.play();
           if (p && p.catch) p.catch(() => {});
         };
 
-        if (video.readyState >= 3) playVideo();
-        else video.addEventListener("canplaythrough", playVideo, { once: true });
+        const syncDots = () => {
+          if (!dotsWrap) return;
+          Array.from(dotsWrap.children).forEach((dot, i) => {
+            dot.classList.toggle("is-active", i === index);
+            dot.setAttribute("aria-selected", i === index ? "true" : "false");
+          });
+        };
+
+        const show = (next) => {
+          const n = slides.length;
+          index = ((next % n) + n) % n;
+          slides.forEach((video, i) => {
+            const on = i === index;
+            video.classList.toggle("is-active", on);
+            if (on) playSlide(video);
+            else video.pause();
+          });
+          syncDots();
+          if (zoomTween) {
+            zoomTween.kill();
+            zoomTween = null;
+          }
+          if (!reduced) {
+            zoomTween = gsap.to(slides[index], {
+              scale: 1.09,
+              duration: 14,
+              ease: "sine.inOut",
+              yoyo: true,
+              repeat: -1,
+            });
+          }
+        };
+
+        if (dotsWrap) {
+          dotsWrap.innerHTML = slides.map((_, i) =>
+            `<button type="button" class="hero-video-dot${i === index ? " is-active" : ""}" role="tab" aria-label="Show video ${i + 1}" aria-selected="${i === index ? "true" : "false"}"></button>`
+          ).join("");
+          Array.from(dotsWrap.children).forEach((dot, i) => {
+            dot.addEventListener("click", () => show(i));
+          });
+        }
+
+        if (prevBtn) prevBtn.addEventListener("click", () => show(index - 1));
+        if (nextBtn) nextBtn.addEventListener("click", () => show(index + 1));
+
+        show(index);
 
         if (reduced) return;
-
-        /* Gentle ambient zoom: always smooth, GPU transform */
-        gsap.to(video, {
-          scale: 1.09,
-          duration: 14,
-          ease: "sine.inOut",
-          yoyo: true,
-          repeat: -1,
-        });
 
         /* Headline entrance */
         gsap.from(intro, {
@@ -1324,7 +1425,7 @@
         });
 
         heroTl.to(wrap, { y: 100, scale: 0.94, transformOrigin: "50% 50%", ease: "none" }, 0);
-        heroTl.to(video, { scale: 1.12, transformOrigin: "50% 50%", ease: "none" }, 0);
+        heroTl.to(slides, { scale: 1.12, transformOrigin: "50% 50%", ease: "none" }, 0);
         heroTl.to(fade, { opacity: 0.85, ease: "none" }, 0);
         heroTl.to(intro, { y: -40, opacity: 0, ease: "power2.in" }, 0);
         heroTl.to(headline, { y: -50, opacity: 0, ease: "power2.in" }, 0);
