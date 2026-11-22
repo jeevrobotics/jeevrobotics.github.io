@@ -583,6 +583,12 @@
       color: var(--muted-light);
       max-width: 44ch;
     }
+    .platform-caption a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .platform-caption a:hover { color: var(--ink-secondary); }
 
     /* ── SIM-TO-REAL ── */
     .section-simreal {
@@ -1176,7 +1182,7 @@
         <h4>Deployment</h4>
         <h3>Deploy zero-shot</h3>
         <p>The same policy weights go straight onto the field robot. No per-farm data collection, no on-site fine-tuning. If the simulation is realistic and varied enough, the real field is just one more sample from the training distribution.</p>
-        <p class="platform-caption">GRASP (2026): a policy trained on deformable plant physics in simulation, deployed zero-shot on a real arm.</p>
+        <p class="platform-caption"><a href="https://yogesh-chawla.com/grasp/" target="_blank" rel="noopener noreferrer">GRASP (2026)</a>: a policy trained on deformable plant physics in simulation, deployed zero-shot on a real arm.</p>
       </div>
     </div>
   </section>
