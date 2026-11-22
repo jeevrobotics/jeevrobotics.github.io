@@ -1084,8 +1084,6 @@
         <div class="thesis-progress" aria-hidden="true">
           <div class="thesis-progress-seg"><div class="thesis-progress-fill" data-fill="0"></div></div>
           <div class="thesis-progress-seg"><div class="thesis-progress-fill" data-fill="1"></div></div>
-          <div class="thesis-progress-seg"><div class="thesis-progress-fill" data-fill="2"></div></div>
-          <div class="thesis-progress-seg"><div class="thesis-progress-fill" data-fill="3"></div></div>
         </div>
       </div>
     </div>
@@ -1490,7 +1488,7 @@
         const statements = gsap.utils.toArray(".thesis-statement");
         const fills = gsap.utils.toArray(".thesis-progress-fill");
         const n = statements.length;
-        const slidersPerLine = 2;
+        const slidersPerLine = 1;
         const steps = n * slidersPerLine;
 
         const setActive = (k) => {
@@ -1504,7 +1502,7 @@
         };
 
         if (reduced) {
-          // Reduced motion: snap statements; two progress segments per line.
+          // Reduced motion: snap statements; one progress segment per line.
           const show = (step) => {
             const k = Math.min(n - 1, Math.floor(step / slidersPerLine));
             statements.forEach((s, i) => {
@@ -1545,7 +1543,7 @@
           },
         });
 
-        // Two progress sliders per line; swap copy halfway through.
+        // One progress slider per line.
         fills.forEach((fill, i) => {
           const t = i / steps;
           tl.to(fill, { width: "100%", duration: 1 / steps, ease: "none" }, t);
