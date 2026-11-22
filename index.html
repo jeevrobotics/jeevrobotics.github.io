@@ -599,12 +599,10 @@
     }
     .platform-caption a:hover { color: var(--ink-secondary); }
 
-    /* Moonshot: videos 25% larger than the shared platform visual size */
-    #codesign .platform-item {
-      grid-template-columns: minmax(0, 5fr) minmax(0, 3fr);
-    }
+    /* Moonshot: videos 25% larger; keep video column large on every row */
+    #codesign .platform-item,
     #codesign .platform-item:nth-child(even) {
-      grid-template-columns: minmax(0, 3fr) minmax(0, 5fr);
+      grid-template-columns: minmax(0, 5fr) minmax(0, 3fr);
     }
     @media (max-width: 768px) {
       #codesign .platform-item,
