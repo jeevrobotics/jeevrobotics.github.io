@@ -458,7 +458,7 @@
     .thesis-statements { position: relative; min-height: 12rem; }
     .thesis-statement {
       position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
       font-size: clamp(1.75rem, 4.5vw, 3.5rem);
       font-weight: 400;
       letter-spacing: -0.03em;
@@ -469,6 +469,14 @@
       pointer-events: none;
     }
     .thesis-statement.is-active { pointer-events: auto; }
+    .thesis-kicker {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      line-height: 1.3;
+    }
     .thesis-progress {
       display: flex; gap: 6px; justify-content: center;
       margin-top: 56px; height: 2px;
@@ -1104,16 +1112,18 @@
       <div class="thesis-inner">
         <p class="thesis-label">Our Thesis</p>
         <div class="thesis-statements">
-          <p class="thesis-statement is-active" data-i="0">Agriculture is not one environment. It is a distribution of them.</p>
-          <p class="thesis-statement" data-i="1">A robot should not need to see your farm before it works on your farm.</p>
-          <p class="thesis-statement" data-i="2">Living matter bends, breaks and grows back. Simulators built for factories do not know this.</p>
-          <p class="thesis-statement" data-i="3">Agriculture is where we start, not where we stop.</p>
+          <p class="thesis-statement is-active" data-i="0">
+            <span class="thesis-kicker">Thesis 01 — The World</span>
+            Agriculture is not one environment. It is a distribution of them.
+          </p>
+          <p class="thesis-statement" data-i="1">
+            <span class="thesis-kicker">Thesis 02 — The Robot</span>
+            A robot should not need to see your farm before it works on your farm.
+          </p>
         </div>
         <div class="thesis-progress" aria-hidden="true">
           <div class="thesis-progress-seg"><div class="thesis-progress-fill" data-fill="0"></div></div>
           <div class="thesis-progress-seg"><div class="thesis-progress-fill" data-fill="1"></div></div>
-          <div class="thesis-progress-seg"><div class="thesis-progress-fill" data-fill="2"></div></div>
-          <div class="thesis-progress-seg"><div class="thesis-progress-fill" data-fill="3"></div></div>
         </div>
       </div>
     </div>
