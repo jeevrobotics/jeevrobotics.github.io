@@ -1429,57 +1429,61 @@
 
         if (reduced) return;
 
-        /* Headline entrance */
-        gsap.from(intro, {
-          y: 36,
-          opacity: 0,
+        /* Headline entrance — fromTo so end state is explicit (avoids scrub locking opacity at 0). */
+        gsap.fromTo(intro, { y: 36, opacity: 0 }, {
+          y: 0,
+          opacity: 1,
           duration: 1.1,
           ease: "power3.out",
           delay: 0.05,
         });
 
-        gsap.from(".hl-line", {
-          y: 48,
-          opacity: 0,
+        gsap.fromTo(".hl-line", { y: 48, opacity: 0 }, {
+          y: 0,
+          opacity: 1,
           duration: 1.1,
           stagger: 0.12,
           ease: "power3.out",
           delay: 0.25,
         });
 
-        gsap.from(wrap, {
-          y: 60,
-          opacity: 0,
-          scale: 0.97,
+        gsap.fromTo(wrap, { y: 60, opacity: 0, scale: 0.97 }, {
+          y: 0,
+          opacity: 1,
+          scale: 1,
           duration: 1.4,
           ease: "power3.out",
           delay: 0.35,
         });
 
-        gsap.from(tag, {
-          y: 24,
-          opacity: 0,
+        gsap.fromTo(tag, { y: 24, opacity: 0 }, {
+          y: 0,
+          opacity: 1,
           duration: 1,
           ease: "power2.out",
           delay: 0.7,
         });
 
-        /* Scroll parallax: scrub lag for buttery motion */
+        /* Scroll parallax: explicit from values so returning to top always restores visibility. */
         const heroTl = gsap.timeline({
           scrollTrigger: {
             trigger: "#hero",
             start: "top top",
             end: "bottom top",
             scrub: 1.4,
+            invalidateOnRefresh: true,
           },
         });
 
-        heroTl.to(wrap, { y: 100, scale: 0.94, transformOrigin: "50% 50%", ease: "none" }, 0);
-        heroTl.to(slides, { scale: 1.12, transformOrigin: "50% 50%", ease: "none" }, 0);
-        heroTl.to(fade, { opacity: 0.85, ease: "none" }, 0);
-        heroTl.to(intro, { y: -40, opacity: 0, ease: "power2.in" }, 0);
-        heroTl.to(headline, { y: -50, opacity: 0, ease: "power2.in" }, 0);
-        heroTl.to(tag, { y: -30, opacity: 0, ease: "power2.in" }, 0);
+        const scrubFromTo = (target, from, to) =>
+          heroTl.fromTo(target, from, { ...to, immediateRender: false }, 0);
+
+        scrubFromTo(wrap, { y: 0, scale: 1, opacity: 1 }, { y: 100, scale: 0.94, opacity: 1, transformOrigin: "50% 50%", ease: "none" });
+        scrubFromTo(slides, { scale: 1 }, { scale: 1.12, transformOrigin: "50% 50%", ease: "none" });
+        scrubFromTo(fade, { opacity: 0 }, { opacity: 0.85, ease: "none" });
+        scrubFromTo(intro, { y: 0, opacity: 1 }, { y: -40, opacity: 0, ease: "power2.in" });
+        scrubFromTo(headline, { y: 0, opacity: 1 }, { y: -50, opacity: 0, ease: "power2.in" });
+        scrubFromTo(tag, { y: 0, opacity: 1 }, { y: -30, opacity: 0, ease: "power2.in" });
       }
 
       /* ── Thesis pinned statements ── */
