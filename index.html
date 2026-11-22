@@ -944,7 +944,7 @@
 <body>
 
   <script id="jeev-config">
-    window.JEEV_CONTACT_EMAIL = "hello@jeevrobotics.com";
+    window.JEEV_CONTACT_EMAIL = "yogeshchawla2850@gmail.com";
     /* Optional: Formspree endpoint for true in-browser send. Example: https://formspree.io/f/xxxx */
     window.JEEV_CONTACT_ENDPOINT = "";
   </script>
@@ -1757,7 +1757,7 @@
         };
 
         const sendViaMailto = (payload) => {
-          const to = window.JEEV_CONTACT_EMAIL || "hello@jeevrobotics.com";
+          const to = window.JEEV_CONTACT_EMAIL || "yogeshchawla2850@gmail.com";
           const subject = encodeURIComponent("Jeev Robotics contact from " + payload.name);
           const body = encodeURIComponent(
             "Name: " + payload.name + "\n" +
@@ -1806,7 +1806,7 @@
               sendViaMailto(payload);
               setStatus("Opening your email client…", "is-ok");
             } catch (err2) {
-              setStatus("Could not send. Email us at " + (window.JEEV_CONTACT_EMAIL || "hello@jeevrobotics.com") + ".", "is-err");
+              setStatus("Could not send. Email us at " + (window.JEEV_CONTACT_EMAIL || "yogeshchawla2850@gmail.com") + ".", "is-err");
             }
           } finally {
             submitBtn.disabled = false;
