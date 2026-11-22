@@ -957,6 +957,7 @@
     </a>
     <div class="nav-links">
       <a href="#platforms" class="nav-pill">Platform</a>
+      <a href="#codesign" class="nav-pill">Co-design</a>
       <button type="button" class="nav-pill nav-pill--accent" id="contactOpen">Contact</button>
     </div>
   </nav>
@@ -1155,6 +1156,54 @@
         <p>The same policy weights go straight onto the field robot. No per-farm data collection, no on-site fine-tuning. If the simulation is realistic and varied enough, the real field is just one more sample from the training distribution.</p>
         <p class="platform-caption">GRASP (2026): a policy trained on deformable plant physics in simulation, deployed zero-shot on a real arm.</p>
       </div>
+    </div>
+  </section>
+
+  <!-- CO-DESIGN -->
+  <section class="section-platforms" id="codesign">
+    <div class="platforms-intro reveal-block">
+      <span class="tag-pill">Co-design</span>
+      <h2>Design the crop and the robot together.</h2>
+      <p>Breeders map gene to trait. We map trait to performance. Give us a plant architecture and we score it the way a grower and a robot both care about: how much light the canopy catches, how much fruit a camera can see, and how much of it an arm can reach. Nothing here simulates genes; it tells a breeding program which shapes are worth breeding for, and a robot team which shapes to build for.</p>
+    </div>
+
+    <div class="platform-list">
+      <article class="platform-item reveal-block">
+        <div class="platform-visual">
+          <video class="platform-video" autoplay muted loop playsinline preload="metadata">
+            <source src="assets/E1_trait_dial_grid.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="platform-copy">
+          <h3>Turn the dial on architecture.</h3>
+          <p>Branch angle, internode length, lateral vigor and leaf size, each swept alone on the same apple tree with the same seed. Every frame is a tree we can plant in simulation, render, and score.</p>
+        </div>
+      </article>
+
+      <article class="platform-item reveal-block">
+        <div class="platform-visual">
+          <video class="platform-video" autoplay muted loop playsinline preload="metadata" style="object-fit: contain; background: #e9ecf3;">
+            <source src="assets/E4_light_heatmap_turntable.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="platform-copy">
+          <h3>Score it for light.</h3>
+          <p>Per-leaf absorbed light at solar noon, same leaves and fruit, only the branch angle changed. The spreading habit absorbs 25% more light per leaf and leaves far less of its canopy in deep shade. Ray-traced in Helios, not estimated.</p>
+        </div>
+      </article>
+
+      <article class="platform-item reveal-block">
+        <div class="platform-visual">
+          <video class="platform-video" autoplay muted loop playsinline preload="metadata">
+            <source src="assets/E5_earth_vs_mars.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="platform-copy">
+          <h3>Same plant, different physics.</h3>
+          <p>A physics illustration of what the stack can vary, not a prediction of how a tree would grow on Mars.</p>
+          <p class="platform-caption">Architecture comparison on the Helios library apple. Not a genetic simulation.</p>
+        </div>
+      </article>
     </div>
   </section>
 
