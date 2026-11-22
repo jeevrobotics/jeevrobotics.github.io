@@ -517,9 +517,29 @@
       border-top: 1px solid var(--border);
     }
     .platform-item:last-child { border-bottom: 1px solid var(--border); }
+    .platform-list--duo {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(24px, 4vw, 40px);
+      padding: clamp(48px, 8vh, 80px) 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .platform-list--duo .platform-item {
+      grid-template-columns: 1fr;
+      gap: 20px;
+      align-items: start;
+      padding: 0;
+      border: none;
+    }
+    .platform-list--duo .platform-item:last-child { border: none; }
+    .platform-list--duo .platform-item:nth-child(even) .platform-copy { order: unset; }
+    .platform-list--duo .platform-copy p { max-width: none; }
     @media (max-width: 768px) {
       .platform-item { grid-template-columns: 1fr; }
       .platform-item:nth-child(even) .platform-visual { order: -1; }
+      .platform-list--duo { grid-template-columns: 1fr; }
+      .platform-list--duo .platform-item:nth-child(even) .platform-visual { order: unset; }
     }
     .platform-item:nth-child(even) .platform-copy { order: 2; }
     .platform-visual {
@@ -1097,7 +1117,7 @@
       <p>General-purpose simulators treat a field as a scene. We treat it as a living system with regional, seasonal and cultivar-level variation, and give you the tools to train and evaluate against all of it. The plant below is corn, not apple: the same stack models deformable physics across crops, so the point is variability: we can do this for any crop you run.</p>
     </div>
 
-    <div class="platform-list">
+    <div class="platform-list platform-list--duo">
       <article class="platform-item reveal-block">
         <div class="platform-visual">
           <div class="vs-slider" id="maizeCompare" aria-label="Maize plant and its simulation mesh">
