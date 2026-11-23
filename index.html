@@ -611,284 +611,140 @@
       }
     }
 
-    /* Moonshot workflow */
+    /* Moonshot loop figure */
     .moonshot-figure {
-      max-width: var(--max);
-      margin: 36px auto 0;
+      max-width: 1100px;
+      margin: 28px auto 0;
       text-align: left;
+      background:
+        linear-gradient(180deg, rgba(238, 241, 255, 0.55), rgba(255, 255, 255, 0.92)),
+        var(--white);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: var(--shadow-sm);
+      padding: clamp(22px, 3vw, 32px);
     }
-    .moonshot-vision {
-      max-width: 46ch;
-      margin: 0 auto 40px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 1.02rem;
-      line-height: 1.65;
-    }
-    .moonshot-workflow {
-      position: relative;
-      display: grid;
-      gap: 0;
-    }
-    .moonshot-rail {
-      position: absolute;
-      left: 50%;
-      top: 0;
-      bottom: 48px;
-      width: 1px;
-      transform: translateX(-50%);
-      background: var(--border-strong);
-      overflow: hidden;
-      pointer-events: none;
-    }
-    .moonshot-rail-fill {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 0%;
-      background: linear-gradient(180deg, var(--accent), var(--accent-soft));
-    }
-    .moonshot-stage {
-      position: relative;
-      opacity: 0.38;
-      transform: translateY(18px);
-      transition: opacity 0.45s var(--ease), transform 0.45s var(--ease);
-      padding: 28px 0;
-    }
-    .moonshot-stage.is-active,
-    .moonshot-stage.is-done {
-      opacity: 1;
-      transform: none;
-    }
-    .moonshot-stage-head {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 10px;
-      margin-bottom: 18px;
-    }
-    .moonshot-stage-index {
-      width: 34px;
-      height: 34px;
-      border-radius: 999px;
-      display: grid;
-      place-items: center;
-      font-size: 12px;
+    .moonshot-figure-kicker {
+      font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
       color: var(--accent);
-      background: var(--white);
-      border: 1px solid rgba(74, 90, 232, 0.28);
-      box-shadow: 0 0 0 6px rgba(238, 241, 255, 0.9);
-      z-index: 2;
+      margin-bottom: 8px;
     }
-    .moonshot-stage.is-active .moonshot-stage-index {
-      background: var(--accent);
-      color: var(--white);
-      border-color: var(--accent);
-    }
-    .moonshot-stage-head h3 {
-      font-size: clamp(1.2rem, 2.4vw, 1.55rem);
+    .moonshot-figure-lead {
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
       font-weight: 500;
       letter-spacing: -0.02em;
       color: var(--ink);
+      line-height: 1.35;
+      margin-bottom: 22px;
+      max-width: none;
     }
-    .moonshot-chips {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 2px;
+    .moonshot-flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      align-items: stretch;
+      position: relative;
     }
-    .moonshot-chip {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--ink-secondary);
+    .moonshot-step {
       background: var(--white);
       border: 1px solid var(--border-strong);
-      border-radius: var(--radius-pill);
-      padding: 6px 12px;
-      transition: border-color 0.25s, color 0.25s, background 0.25s;
-      cursor: default;
-    }
-    .moonshot-chip:hover,
-    .moonshot-stage.is-active .moonshot-chip.is-lit {
-      border-color: rgba(74, 90, 232, 0.45);
-      color: var(--accent);
-      background: var(--accent-tint);
-    }
-    .moonshot-panel {
-      display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-      gap: clamp(18px, 3vw, 36px);
-      align-items: center;
-      max-width: 980px;
-      margin: 0 auto;
-    }
-    .moonshot-panel--center {
-      grid-template-columns: 1fr;
-      max-width: 720px;
-      text-align: center;
-    }
-    .moonshot-media {
+      border-radius: 16px;
+      padding: 14px 14px 16px;
+      min-width: 0;
       position: relative;
-      border-radius: 20px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      background: #e9ecf3;
-      aspect-ratio: 16 / 10;
-      box-shadow: var(--shadow-sm);
     }
-    .moonshot-media video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .moonshot-media--contain video {
-      object-fit: contain;
-      background: #e9ecf3;
-    }
-    .moonshot-media-label {
-      position: absolute;
-      left: 12px;
-      bottom: 12px;
+    .moonshot-step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      background: var(--accent-tint);
+      color: var(--accent);
       font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      color: var(--ink-secondary);
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-pill);
-      padding: 5px 10px;
-      pointer-events: none;
+      font-weight: 600;
+      margin-bottom: 10px;
     }
-    .moonshot-copy {
-      color: var(--muted);
+    .moonshot-step h4 {
       font-size: 0.95rem;
-      line-height: 1.65;
-      max-width: 36ch;
-    }
-    .moonshot-panel--center .moonshot-copy {
-      margin: 0 auto;
-      max-width: 48ch;
-    }
-    .moonshot-split {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(14px, 2vw, 22px);
-      max-width: 980px;
-      margin: 0 auto;
-    }
-    .moonshot-path {
-      padding: 18px 18px 20px;
-      border-top: 2px solid transparent;
-      transition: border-color 0.3s, background 0.3s;
-      background: linear-gradient(180deg, rgba(255,255,255,0.7), transparent);
-    }
-    .moonshot-path:hover,
-    .moonshot-stage.is-active .moonshot-path {
-      border-top-color: var(--accent);
-    }
-    .moonshot-path h4 {
-      font-size: 0.92rem;
       font-weight: 600;
       letter-spacing: -0.01em;
       color: var(--ink);
-      margin-bottom: 8px;
+      margin-bottom: 10px;
+      line-height: 1.3;
     }
-    .moonshot-path p {
+    .moonshot-step ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .moonshot-step li {
       font-size: 0.82rem;
+      line-height: 1.45;
       color: var(--muted);
-      line-height: 1.5;
-      margin-bottom: 12px;
     }
-    .moonshot-path .moonshot-media {
-      aspect-ratio: 16 / 11;
-      margin-bottom: 12px;
+    .moonshot-step li strong {
+      color: var(--ink-secondary);
+      font-weight: 500;
     }
-    .moonshot-fork,
-    .moonshot-merge {
-      height: 36px;
-      position: relative;
-      max-width: 280px;
-      margin: 0 auto;
+    .moonshot-step--loop {
+      background: linear-gradient(180deg, var(--accent-tint), var(--white));
+      border-color: rgba(74, 90, 232, 0.28);
     }
-    .moonshot-fork svg,
-    .moonshot-merge svg,
-    .moonshot-loop svg {
-      width: 100%;
-      height: 100%;
-      overflow: visible;
-    }
-    .moonshot-conn {
-      fill: none;
-      stroke: var(--border-strong);
-      stroke-width: 1.5;
-      stroke-linecap: round;
-    }
-    .moonshot-conn-active {
-      stroke: var(--accent);
-      stroke-dasharray: 120;
-      stroke-dashoffset: 120;
-      transition: stroke-dashoffset 0.7s var(--ease);
-    }
-    .moonshot-stage.is-active .moonshot-conn-active,
-    .moonshot-stage.is-done .moonshot-conn-active {
-      stroke-dashoffset: 0;
-    }
-    .moonshot-loop {
-      height: 72px;
-      max-width: 420px;
-      margin: 8px auto 0;
-      position: relative;
-    }
-    .moonshot-loop-label {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+    .moonshot-step--loop .moonshot-loop-note {
+      margin-top: 12px;
+      font-size: 0.78rem;
+      font-weight: 500;
       color: var(--accent);
-      background: var(--surface);
-      padding: 0 10px;
-      white-space: nowrap;
+      letter-spacing: 0.02em;
     }
-    .moonshot-aside {
-      margin: 28px auto 0;
-      max-width: 52ch;
-      text-align: center;
-      font-size: 0.82rem;
-      line-height: 1.55;
-      color: var(--muted-light);
+    .moonshot-flow-arrow {
+      display: none;
     }
-    @media (max-width: 800px) {
-      .moonshot-rail { left: 17px; transform: none; }
-      .moonshot-stage-head { align-items: flex-start; text-align: left; padding-left: 44px; }
-      .moonshot-stage-index { position: absolute; left: 0; top: 28px; }
-      .moonshot-chips { justify-content: flex-start; }
-      .moonshot-panel,
-      .moonshot-split { grid-template-columns: 1fr; }
-      .moonshot-copy { max-width: none; }
-      .moonshot-fork,
-      .moonshot-merge { display: none; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .moonshot-stage {
-        opacity: 1;
-        transform: none;
-        transition: none;
+    @media (min-width: 900px) {
+      .moonshot-flow-arrow {
+        display: block;
+        position: absolute;
+        top: 28px;
+        width: 18px;
+        height: 2px;
+        background: var(--accent-soft);
+        opacity: 0.7;
+        pointer-events: none;
       }
-      .moonshot-conn-active {
-        stroke-dashoffset: 0;
-        transition: none;
+      .moonshot-flow-arrow::after {
+        content: "";
+        position: absolute;
+        right: -1px;
+        top: -3px;
+        border: 4px solid transparent;
+        border-left-color: var(--accent-soft);
       }
-      .moonshot-rail-fill { height: 100%; }
+      .moonshot-flow-arrow--1 { left: calc(20% - 9px); }
+      .moonshot-flow-arrow--2 { left: calc(40% - 9px); }
+      .moonshot-flow-arrow--3 { left: calc(60% - 9px); }
+      .moonshot-flow-arrow--4 { left: calc(80% - 9px); }
+    }
+    @media (max-width: 1099px) {
+      .moonshot-flow {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .moonshot-flow-arrow { display: none; }
+    }
+    @media (max-width: 720px) {
+      .moonshot-flow {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 520px) {
+      .moonshot-flow {
+        grid-template-columns: 1fr;
+      }
     }
 
     /* ── SIM-TO-REAL ── */
@@ -1489,132 +1345,50 @@
     <div class="platforms-intro reveal-block">
       <span class="tag-pill">Moonshot</span>
       <h2>Design the crop and the robot together.</h2>
-      <p class="moonshot-vision">Instead of only adapting robots to crops, we can design crops and robots to work together.</p>
+      <figure class="moonshot-figure" aria-label="Moonshot loop: design crop and robot together">
+        <p class="moonshot-figure-kicker">The Moonshot</p>
+        <p class="moonshot-figure-lead">Crop and robot are designed together.</p>
+        <div class="moonshot-flow">
+          <span class="moonshot-flow-arrow moonshot-flow-arrow--1" aria-hidden="true"></span>
+          <span class="moonshot-flow-arrow moonshot-flow-arrow--2" aria-hidden="true"></span>
+          <span class="moonshot-flow-arrow moonshot-flow-arrow--3" aria-hidden="true"></span>
+          <span class="moonshot-flow-arrow moonshot-flow-arrow--4" aria-hidden="true"></span>
+          <div class="moonshot-step">
+            <span class="moonshot-step-num">1</span>
+            <h4>Explore plant architecture</h4>
+            <ul>
+              <li>Branch angle · Internode length · Vigor · Leaf size</li>
+            </ul>
+          </div>
+          <div class="moonshot-step">
+            <span class="moonshot-step-num">2</span>
+            <h4>Grower performance</h4>
+            <ul>
+              <li>Light · Yield · Health</li>
+            </ul>
+          </div>
+          <div class="moonshot-step">
+            <span class="moonshot-step-num">3</span>
+            <h4>Robot performance</h4>
+            <ul>
+              <li>Visibility · Reachability · Manipulation</li>
+            </ul>
+          </div>
+          <div class="moonshot-step">
+            <span class="moonshot-step-num">4</span>
+            <h4>Joint optimization</h4>
+            <ul>
+              <li>Identify promising crop–robot combinations</li>
+            </ul>
+          </div>
+          <div class="moonshot-step moonshot-step--loop">
+            <span class="moonshot-step-num">5</span>
+            <h4>Next-generation growing systems</h4>
+            <p class="moonshot-loop-note">Validate · Breed · Engineer · Iterate</p>
+          </div>
+        </div>
+      </figure>
     </div>
-
-    <figure class="moonshot-figure" id="moonshotWorkflow" aria-label="Moonshot co-design workflow">
-      <div class="moonshot-workflow">
-        <div class="moonshot-rail" aria-hidden="true"><div class="moonshot-rail-fill" id="moonshotRailFill"></div></div>
-
-        <section class="moonshot-stage" data-moonshot-stage="0">
-          <div class="moonshot-stage-head">
-            <span class="moonshot-stage-index">01</span>
-            <h3>Explore plant architecture</h3>
-            <div class="moonshot-chips">
-              <span class="moonshot-chip">Branch angle</span>
-              <span class="moonshot-chip">Internode length</span>
-              <span class="moonshot-chip">Vigor</span>
-              <span class="moonshot-chip">Leaf size</span>
-            </div>
-          </div>
-          <div class="moonshot-panel">
-            <div class="moonshot-media">
-              <video class="platform-video" autoplay muted loop playsinline preload="metadata">
-                <source src="assets/E1_trait_dial_grid.mp4" type="video/mp4" />
-              </video>
-              <span class="moonshot-media-label">Architecture traits</span>
-            </div>
-            <p class="moonshot-copy">Sweep architectural parameters on the same plant, same seed. Every frame is a canopy we can render, measure, and score in simulation.</p>
-          </div>
-        </section>
-
-        <div class="moonshot-fork" aria-hidden="true">
-          <svg viewBox="0 0 280 36" preserveAspectRatio="none">
-            <path class="moonshot-conn" d="M140 0 V10" />
-            <path class="moonshot-conn moonshot-conn-active" d="M140 10 C140 28, 40 28, 40 36" />
-            <path class="moonshot-conn moonshot-conn-active" d="M140 10 C140 28, 240 28, 240 36" />
-          </svg>
-        </div>
-
-        <section class="moonshot-stage" data-moonshot-stage="1">
-          <div class="moonshot-stage-head">
-            <span class="moonshot-stage-index">02</span>
-            <h3>Evaluate performance</h3>
-          </div>
-          <div class="moonshot-split">
-            <div class="moonshot-path" data-path="grower">
-              <div class="moonshot-media moonshot-media--contain">
-                <video class="platform-video" autoplay muted loop playsinline preload="metadata">
-                  <source src="assets/E4_light_heatmap_turntable.mp4" type="video/mp4" />
-                </video>
-                <span class="moonshot-media-label">Canopy light</span>
-              </div>
-              <h4>Grower performance</h4>
-              <p>From the same architecture, score what a grower cares about.</p>
-              <div class="moonshot-chips">
-                <span class="moonshot-chip">Light</span>
-                <span class="moonshot-chip">Yield</span>
-                <span class="moonshot-chip">Health</span>
-              </div>
-            </div>
-            <div class="moonshot-path" data-path="robot">
-              <div class="moonshot-media">
-                <video class="platform-video" autoplay muted loop playsinline preload="metadata">
-                  <source src="assets/interaction_3.mp4" type="video/mp4" />
-                </video>
-                <span class="moonshot-media-label">Manipulation</span>
-              </div>
-              <h4>Robot performance</h4>
-              <p>From the same architecture, score what a robot needs to succeed.</p>
-              <div class="moonshot-chips">
-                <span class="moonshot-chip">Visibility</span>
-                <span class="moonshot-chip">Reachability</span>
-                <span class="moonshot-chip">Manipulation</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <div class="moonshot-merge" aria-hidden="true">
-          <svg viewBox="0 0 280 36" preserveAspectRatio="none">
-            <path class="moonshot-conn moonshot-conn-active" d="M40 0 C40 16, 140 16, 140 36" />
-            <path class="moonshot-conn moonshot-conn-active" d="M240 0 C240 16, 140 16, 140 36" />
-          </svg>
-        </div>
-
-        <section class="moonshot-stage" data-moonshot-stage="2">
-          <div class="moonshot-stage-head">
-            <span class="moonshot-stage-index">03</span>
-            <h3>Joint optimization</h3>
-            <div class="moonshot-chips">
-              <span class="moonshot-chip">Crop–robot combinations</span>
-            </div>
-          </div>
-          <div class="moonshot-panel moonshot-panel--center">
-            <p class="moonshot-copy">Agricultural and robotic scores meet here. Identify architectures that are worth breeding for and building for — promising crop–robot combinations, not automatic genetic redesign.</p>
-          </div>
-        </section>
-
-        <section class="moonshot-stage" data-moonshot-stage="3">
-          <div class="moonshot-stage-head">
-            <span class="moonshot-stage-index">04</span>
-            <h3>Next-generation growing systems</h3>
-            <div class="moonshot-chips">
-              <span class="moonshot-chip">Validate</span>
-              <span class="moonshot-chip">Breed</span>
-              <span class="moonshot-chip">Engineer</span>
-              <span class="moonshot-chip">Iterate</span>
-            </div>
-          </div>
-          <div class="moonshot-panel">
-            <div class="moonshot-media">
-              <video class="platform-video" autoplay muted loop playsinline preload="metadata">
-                <source src="assets/E5_earth_vs_mars.mp4" type="video/mp4" />
-              </video>
-              <span class="moonshot-media-label">Physics variation</span>
-            </div>
-            <p class="moonshot-copy">Carry selected architectures forward with breeding programs and robot design — then return to exploration. The loop is iterative; simulation scores shapes, it does not invent genes.</p>
-          </div>
-          <div class="moonshot-loop" aria-hidden="true">
-            <svg viewBox="0 0 420 72" preserveAspectRatio="xMidYMid meet">
-              <path class="moonshot-conn moonshot-conn-active" d="M210 8 C320 8, 360 36, 210 58 C60 36, 100 8, 210 8" />
-            </svg>
-            <span class="moonshot-loop-label">Feedback loop</span>
-          </div>
-        </section>
-      </div>
-      <p class="moonshot-aside">Aspirational co-design loop. Scoring of architecture is demonstrated below; closing the breeding loop is the bet.</p>
-    </figure>
 
     <div class="platform-list">
       <article class="platform-item reveal-block">
@@ -2316,51 +2090,10 @@
         });
       }
 
-      function initMoonshotFlow() {
-        const root = document.getElementById("moonshotWorkflow");
-        if (!root) return;
-        const stages = Array.from(root.querySelectorAll("[data-moonshot-stage]"));
-        const railFill = document.getElementById("moonshotRailFill");
-        const chips = Array.from(root.querySelectorAll(".moonshot-chip"));
-
-        const setProgress = (progress) => {
-          const n = stages.length;
-          const active = Math.min(n - 1, Math.floor(progress * n));
-          stages.forEach((stage, i) => {
-            stage.classList.toggle("is-active", i === active);
-            stage.classList.toggle("is-done", i < active);
-          });
-          if (railFill) railFill.style.height = Math.max(8, progress * 100) + "%";
-        };
-
-        chips.forEach((chip) => {
-          chip.addEventListener("mouseenter", () => chip.classList.add("is-lit"));
-          chip.addEventListener("mouseleave", () => chip.classList.remove("is-lit"));
-        });
-
-        if (reduced) {
-          stages.forEach((s) => s.classList.add("is-active", "is-done"));
-          if (railFill) railFill.style.height = "100%";
-          return;
-        }
-
-        ScrollTrigger.create({
-          trigger: root,
-          start: "top 70%",
-          end: "bottom 55%",
-          scrub: 0.6,
-          onUpdate: (self) => setProgress(self.progress),
-          onEnter: () => setProgress(0.05),
-        });
-
-        setProgress(0);
-      }
-
       function init() {
         initHero();
         initThesis();
         initReveals();
-        initMoonshotFlow();
         initPlatformViz();
         initStats();
         initCropModal();
