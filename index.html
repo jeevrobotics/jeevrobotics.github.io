@@ -614,8 +614,9 @@
     /* Moonshot loop figure */
     .moonshot-figure {
       max-width: 1100px;
+      width: 100%;
       margin: 28px auto 0;
-      text-align: left;
+      text-align: center;
       background:
         linear-gradient(180deg, rgba(238, 241, 255, 0.55), rgba(255, 255, 255, 0.92)),
         var(--white);
@@ -630,7 +631,7 @@
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 8px;
+      margin: 0 auto 8px;
     }
     .moonshot-figure-lead {
       font-size: clamp(1.05rem, 2vw, 1.25rem);
@@ -638,8 +639,8 @@
       letter-spacing: -0.02em;
       color: var(--ink);
       line-height: 1.35;
-      margin-bottom: 22px;
-      max-width: none;
+      margin: 0 auto 22px;
+      max-width: 36ch;
     }
     .moonshot-flow {
       display: grid;
@@ -647,14 +648,19 @@
       gap: 10px;
       align-items: stretch;
       position: relative;
+      text-align: center;
     }
     .moonshot-step {
       background: var(--white);
       border: 1px solid var(--border-strong);
       border-radius: 16px;
-      padding: 14px 14px 16px;
+      padding: 14px 12px 16px;
       min-width: 0;
       position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
     }
     .moonshot-step-num {
       display: inline-flex;
@@ -667,7 +673,7 @@
       color: var(--accent);
       font-size: 11px;
       font-weight: 600;
-      margin-bottom: 10px;
+      margin: 0 auto 10px;
     }
     .moonshot-step h4 {
       font-size: 0.95rem;
@@ -681,12 +687,15 @@
       list-style: none;
       display: flex;
       flex-direction: column;
+      align-items: center;
       gap: 6px;
+      width: 100%;
     }
     .moonshot-step li {
       font-size: 0.82rem;
       line-height: 1.45;
       color: var(--muted);
+      text-align: center;
     }
     .moonshot-step li strong {
       color: var(--ink-secondary);
