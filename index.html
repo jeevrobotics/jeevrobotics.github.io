@@ -652,9 +652,10 @@
       max-width: 36ch;
     }
     .moonshot-flow {
+      --moonshot-gap: clamp(22px, 2.8vw, 36px);
       display: grid;
       grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: clamp(22px, 2.8vw, 36px);
+      gap: var(--moonshot-gap);
       align-items: stretch;
       position: relative;
       text-align: center;
@@ -670,6 +671,30 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
+    }
+    /* Arrows live in the gutter between steps, not at fixed % of the row */
+    @media (min-width: 1100px) {
+      .moonshot-step:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: 24px;
+        left: calc(100% + (var(--moonshot-gap) / 2) - 10px);
+        width: 14px;
+        height: 2px;
+        background: var(--accent-soft);
+        pointer-events: none;
+        z-index: 2;
+      }
+      .moonshot-step:not(:last-child)::before {
+        content: "";
+        position: absolute;
+        top: 20px;
+        left: calc(100% + (var(--moonshot-gap) / 2) + 2px);
+        border: 5px solid transparent;
+        border-left-color: var(--accent-soft);
+        pointer-events: none;
+        z-index: 2;
+      }
     }
     .moonshot-step-num {
       display: inline-flex;
@@ -721,40 +746,11 @@
       color: var(--accent);
       letter-spacing: 0.02em;
     }
-    .moonshot-flow-arrow {
-      display: none;
-    }
-    @media (min-width: 1100px) {
-      .moonshot-flow-arrow {
-        display: block;
-        position: absolute;
-        top: 30px;
-        width: clamp(20px, 2.4vw, 32px);
-        height: 2px;
-        background: var(--accent-soft);
-        opacity: 0.85;
-        pointer-events: none;
-        z-index: 2;
-      }
-      .moonshot-flow-arrow::after {
-        content: "";
-        position: absolute;
-        right: -1px;
-        top: -4px;
-        border: 5px solid transparent;
-        border-left-color: var(--accent-soft);
-      }
-      .moonshot-flow-arrow--1 { left: calc(20% - 12px); }
-      .moonshot-flow-arrow--2 { left: calc(40% - 12px); }
-      .moonshot-flow-arrow--3 { left: calc(60% - 12px); }
-      .moonshot-flow-arrow--4 { left: calc(80% - 12px); }
-    }
     @media (max-width: 1099px) {
       .moonshot-flow {
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 18px;
       }
-      .moonshot-flow-arrow { display: none; }
     }
     @media (max-width: 720px) {
       .moonshot-flow {
@@ -1369,10 +1365,6 @@
         <p class="moonshot-figure-kicker">The Moonshot</p>
         <p class="moonshot-figure-lead">Crop and robot are designed together.</p>
         <div class="moonshot-flow">
-          <span class="moonshot-flow-arrow moonshot-flow-arrow--1" aria-hidden="true"></span>
-          <span class="moonshot-flow-arrow moonshot-flow-arrow--2" aria-hidden="true"></span>
-          <span class="moonshot-flow-arrow moonshot-flow-arrow--3" aria-hidden="true"></span>
-          <span class="moonshot-flow-arrow moonshot-flow-arrow--4" aria-hidden="true"></span>
           <div class="moonshot-step">
             <span class="moonshot-step-num">1</span>
             <h4>Explore plant architecture</h4>
