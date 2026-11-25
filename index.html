@@ -599,16 +599,24 @@
     }
     .platform-caption a:hover { color: var(--ink-secondary); }
 
-    /* Moonshot evidence videos: 20% larger than equal split (60/40) */
+    /* Moonshot evidence videos: ~20% larger again (~72/28 split) */
     #codesign .platform-list {
-      max-width: calc(var(--max) * 1.12);
+      max-width: calc(var(--max) * 1.2);
     }
     #codesign .platform-item,
     #codesign .platform-item:nth-child(even) {
-      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      grid-template-columns: minmax(0, 5fr) minmax(0, 2fr);
     }
     #codesign .platform-visual {
       aspect-ratio: 16 / 10;
+    }
+    #codesign .platform-copy p {
+      font-size: 1.1rem;
+      line-height: 1.75;
+      max-width: 42ch;
+    }
+    #codesign .platform-copy h3 {
+      font-size: clamp(1.55rem, 2.8vw, 2.1rem);
     }
     @media (max-width: 768px) {
       #codesign .platform-item,
