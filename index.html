@@ -672,26 +672,28 @@
       align-items: center;
       text-align: center;
     }
-    /* Arrows live in the gutter between steps, not at fixed % of the row */
+    /* Arrows centered vertically in the gutter between steps */
     @media (min-width: 1100px) {
       .moonshot-step:not(:last-child)::after {
         content: "";
         position: absolute;
-        top: 24px;
+        top: 50%;
         left: calc(100% + (var(--moonshot-gap) / 2) - 10px);
         width: 14px;
         height: 2px;
         background: var(--accent-soft);
+        transform: translateY(-50%);
         pointer-events: none;
         z-index: 2;
       }
       .moonshot-step:not(:last-child)::before {
         content: "";
         position: absolute;
-        top: 20px;
+        top: 50%;
         left: calc(100% + (var(--moonshot-gap) / 2) + 2px);
         border: 5px solid transparent;
         border-left-color: var(--accent-soft);
+        transform: translateY(-50%);
         pointer-events: none;
         z-index: 2;
       }
